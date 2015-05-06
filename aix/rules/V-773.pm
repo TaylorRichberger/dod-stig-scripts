@@ -3,7 +3,8 @@ my $title = 'The root account must be the only account having an UID of 0.';
 my $severity = 'medium';
 my $description = 'If an account has an UID of 0, it has root authority. Multiple accounts with an UID of 0 afford more opportunity for potential intruders to guess a password for a privileged account.';
 my $fix = 'Remove or change the UID of accounts other than root that have UID 0.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

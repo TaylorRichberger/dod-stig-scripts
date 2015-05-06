@@ -3,7 +3,8 @@ my $title = 'The FTP services should not be active';
 my $severity = 'col';
 my $description = 'Data transmitted over FTP is in the clear.  Transmission of sensitive data should always be encrypted.';
 my $fix = '';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

@@ -3,7 +3,8 @@ my $title = 'The system must not use .forward files.';
 my $severity = 'medium';
 my $description = 'The .forward file allows users to automatically forward mail to another system. Use of .forward files could allow the unauthorized forwarding of mail and could potentially create mail loops which could degrade system performance.';
 my $fix = 'Remove .forward files from the system.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

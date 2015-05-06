@@ -5,7 +5,12 @@ my $description = 'If the group-owner of the smb.conf file is not root or a syst
 my $fix = 'Change the group owner of the smb.conf file. 
 Procedure: 
 # chgrp system /usr/lib/smb.conf';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/usr/lib/smb.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -32,17 +37,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkGroups($filename, qr/^(bin|sys|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp system $filename`;
 }
+
+1;

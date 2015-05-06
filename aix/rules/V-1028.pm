@@ -1,3 +1,5 @@
+use Fcntl ':mode';
+
 my $id = 'V-1028';
 my $title = 'The /usr/lib/smb.conf file must have mode 0644 or less permissive.';
 my $severity = 'medium';
@@ -6,7 +8,12 @@ my $fix = 'Change the mode of the smb.conf file to 0644 or less permissive.
 
 Procedure:
 # chmod 0644 /usr/lib/smb.conf';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/usr/lib/smb.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -33,17 +40,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkMode($filename, 0644);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $filename`;
 }
+
+1;

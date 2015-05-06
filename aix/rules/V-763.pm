@@ -28,7 +28,8 @@ By using this IS (which includes any device attached to this IS), you consent to
 OR
 
 "I\'ve read & consent to terms in IS user agreem\'t."';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -55,9 +56,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -69,3 +75,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

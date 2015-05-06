@@ -5,7 +5,8 @@ my $description = 'Dynamic DNS updates transmit unencrypted information about a 
 my $fix = 'Configure the system\'s DHCP client to not send dynamic DNS updates.  
 
 Remove / comment updateDNS lines from the /etc/dhcpcd.ini and /etc/dhcpc.opt files.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

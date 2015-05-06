@@ -13,7 +13,8 @@ Procedure:
 
 Procedure:
 Identify and edit the initialization file referencing the world-writable directory and remove it from the PATH variable.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -40,9 +41,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -54,3 +60,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

@@ -4,7 +4,8 @@ my $severity = 'low';
 my $description = 'Kerberos authentication for SSH is often implemented using GSSAPI.  If Kerberos is enabled through SSH, the SSH daemon provides a means of access to the system\'s Kerberos implementation.  Vulnerabilities in the system\'s Kerberos implementation may then be subject to exploitation.  To reduce the attack surface of the system, the Kerberos authentication mechanism within SSH must be disabled for systems not using this capability.
 ';
 my $fix = 'Edit the /etc/ssh/sshd_config file and remove the KerberosAuthentication setting or change the value of the setting to "no".';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -31,9 +32,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -45,3 +51,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

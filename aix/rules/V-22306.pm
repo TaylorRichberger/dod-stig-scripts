@@ -7,7 +7,8 @@ my $fix = 'Use the chsec command to change mindiff to 4.
 # chsec -f /etc/security/user -s default -a mindiff=4
 
 # chuser mindiff=4 < user id >';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -34,9 +35,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -48,3 +54,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

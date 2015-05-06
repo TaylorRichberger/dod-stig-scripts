@@ -5,7 +5,8 @@ my $description = 'If the skeleton files are not protected, unauthorized personn
 my $fix = 'Change the ownership of skeleton files with incorrect mode.
 
 # chown root /etc/security/.profile /etc/security/mkuser.sys';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

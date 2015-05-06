@@ -5,7 +5,8 @@ my $description = 'If the ftpaccess.ctl file is not group-owned by a system grou
 my $fix = 'Change the group owner of the /etc/ftpaccess.ctl file.
 
 # chgrp system /etc/ftpaccess.ctl';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

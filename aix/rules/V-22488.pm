@@ -3,7 +3,8 @@ my $title = 'The SSH daemon must not allow compression or must only allow compre
 my $severity = 'medium';
 my $description = 'If compression is allowed in an SSH connection prior to authentication, vulnerabilities in the compression software could result in compromise of the system from an unauthenticated connection, potentially with root privileges.';
 my $fix = 'Edit the /etc/ssh/sshd_config file and remove the Compression setting or set the Compression setting to "delayed" or "no".';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

@@ -6,7 +6,12 @@ my $fix = 'Change the minimum password length to 14 or more.
 
 # chsec -f /etc/security/user -s default -a minlen=14
 # chuser minlen=14 <user id>';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -33,17 +38,31 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    my ($output, $problemusers) = STIG::minSec($filename, 'minlen', 14);
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my ($dummy, $problemusers) = STIG::minSec($filename, 'minlen', 14);
+    my $output = '';
+    for my $user (@{$problemusers})
+    {
+        $output .= `chsec -f /etc/security/user -s $user -a minlen=14`;
+    }
+    return $output;
 }
+
+1;

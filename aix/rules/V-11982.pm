@@ -6,7 +6,12 @@ my $fix = 'Change the ownership of global initialization files with incorrect ow
 
 Procedure:
 # chown bin <global initialization files>';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/profile';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -33,17 +38,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkOwner($filename, 'root');
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
+
+1;

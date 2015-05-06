@@ -3,7 +3,8 @@ my $title = 'There must be no .rhosts, .shosts, hosts.equiv, or shosts.equiv fil
 my $severity = 'high';
 my $description = 'The .rhosts, .shosts, hosts.equiv, and shosts.equiv files are used to configure host-based authentication for individual users or the system.  Host-based authentication is not sufficient for preventing unauthorized access to the system.';
 my $fix = 'Remove the .rhosts, .shosts, hosts.equiv, and/or shosts.equiv files.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

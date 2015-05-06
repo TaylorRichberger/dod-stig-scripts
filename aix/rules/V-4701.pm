@@ -4,7 +4,8 @@ my $severity = 'low';
 my $description = 'The finger service provides information about the system\'s users to network clients.  This information could expose information that could be used in subsequent attacks.
 ';
 my $fix = 'Edit /etc/inetd.conf and comment out the finger service line.  Restart the inetd service.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -31,9 +32,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -45,3 +51,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

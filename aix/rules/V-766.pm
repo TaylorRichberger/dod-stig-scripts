@@ -6,7 +6,8 @@ my $fix = 'Use the chsec command to configure the number of unsuccessful logins 
 
 # chsec -f /etc/security/user -s default -a loginretries=3 
 # chsec -f /etc/security/user -s <user id> -a loginretries=3';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -33,9 +34,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -47,3 +53,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

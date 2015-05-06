@@ -3,7 +3,8 @@ my $title = 'The SSH client must be configured to only use Message Authenticatio
 my $severity = 'medium';
 my $description = 'DoD information systems are required to use FIPS 140-2 approved cryptographic hash functions.';
 my $fix = 'Edit the SSH client configuration and remove any MACs other than hmac-sha1.  If necessary, add a MACs line.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

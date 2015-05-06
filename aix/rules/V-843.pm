@@ -4,7 +4,8 @@ my $severity = 'medium';
 my $description = 'Excessive permissions on the ftpusers file could permit unauthorized modification.  Unauthorized modification could result in Denial of Service to authorized FTP users or permit unauthorized users to access the FTP service.';
 my $fix = 'Change the mode of the ftpusers file to 0640.
 # chmod 0640 /etc/ftpusers';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -31,9 +32,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -45,3 +51,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

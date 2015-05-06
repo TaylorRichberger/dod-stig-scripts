@@ -6,7 +6,12 @@ my $fix = 'Change the mode of the smbpasswd file to 0600.
 
 Procedure:
 # chmod 0600 /var/private/smbpasswd';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/private/smbpasswd';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -33,17 +38,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkMode($filename, 0600);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0600 $filename`;
 }
+
+1;

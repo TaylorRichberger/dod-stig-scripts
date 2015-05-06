@@ -15,7 +15,8 @@ Add a daily or more frequent cronjob to perform synchronization using ntpdate.
 
 NOTE: While it is possible to run ntpdate from a cron script, it is important to mention that ntpdate with contrived cron scripts is no substitute for the NTP daemon, which uses sophisticated algorithms to maximize accuracy and reliability while minimizing resource use.
 Finally, since ntpdate polling does not discipline the host clock frequency as does xntpd, the accuracy using ntpdate is limited. The process of passively listening for NTP broadcasts (i.e., placing the line broadcastclient yes in the /etc/ntp.conf file) is preferred over any procedural form of direct server polling for a large network with many nodes needing to be time synchronized. This method is preferred because it significantly reduces the network traffic load related to NTP.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -42,9 +43,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -56,3 +62,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

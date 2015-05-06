@@ -5,7 +5,8 @@ my $description = 'If the group-owner of the at.allow file is not set to system,
 my $fix = 'Change the group owner of the at.allow file to sys, system, bin, or cron. 
 Procedure: 
 # chgrp cron /var/adm/cron/at.allow';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

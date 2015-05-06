@@ -3,7 +3,11 @@ my $title = 'The operating system must be a supported release.';
 my $severity = 'high';
 my $description = 'An operating system release is considered "supported" if the vendor continues to provide security patches for the product.  With an unsupported release, it will not be possible to resolve security issues discovered in the system software.';
 my $fix = 'Upgrade to a supported version of the operating system.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -30,9 +34,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +53,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

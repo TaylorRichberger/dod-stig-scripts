@@ -5,7 +5,8 @@ my $description = 'If file permissions for cron.deny are more permissive than 06
 ';
 my $fix = 'Change the mode of the cron.deny file.
 # chmod 0600 /var/adm/cron/cron.deny';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

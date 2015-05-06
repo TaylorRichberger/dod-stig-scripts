@@ -5,7 +5,12 @@ my $description = 'If the smbpasswd file is not group-owned by root, the smbpass
 my $fix = 'Use the chgrp command to change  the group owner of the smbpasswd file to system. 
 
 # chgrp system /var/private/smbpasswd';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/private/smbpasswd';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -32,17 +37,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkGroups($filename, qr/^(sys|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp system $filename`;
 }
+
+1;

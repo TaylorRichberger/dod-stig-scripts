@@ -21,14 +21,16 @@ while (my $row = $csv->getline($file)) {
     printf($idfile "my \$severity = '%s';\n", $severity);
     printf($idfile "my \$description = '%s';\n", $description);
     printf($idfile "my \$fix = '%s';\n", $fix);
-    printf($idfile "my \$auto = 0;\n");
+    printf($idfile "my \$autotest = 0;\n");
+    printf($idfile "my \$autofix = 0;\n");
     printf($idfile "\n");
     printf($idfile "sub getId()\n{\n    return \$id;\n}\n\n");
     printf($idfile "sub getTitle()\n{\n    return \$title;\n}\n\n");
     printf($idfile "sub getSeverity()\n{\n    return \$severity;\n}\n\n");
     printf($idfile "sub getDescription()\n{\n    return \$description;\n}\n\n");
     printf($idfile "sub getFix()\n{\n    return \$fix;\n}\n\n");
-    printf($idfile "sub auto()\n{\n    return \$auto;\n}\n\n");
+    printf($idfile "sub canTest()\n{\n    return \$autotest;\n}\n\n");
+    printf($idfile "sub canFix()\n{\n    return \$autofix;\n}\n\n");
     printf($idfile "sub test()\n{\n    return 0;\n}\n\n");
     printf($idfile "sub fix()\n{\n    return 0;\n}\n");
     close($idfile);

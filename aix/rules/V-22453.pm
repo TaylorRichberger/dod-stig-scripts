@@ -4,7 +4,8 @@ my $severity = 'medium';
 my $description = 'Unauthorized users must not be allowed to access or modify the /etc/syslog.conf file.';
 my $fix = 'Change the permissions of the syslog configuration file.
 # chmod 0640 /etc/syslog.conf';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -31,9 +32,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -45,3 +51,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

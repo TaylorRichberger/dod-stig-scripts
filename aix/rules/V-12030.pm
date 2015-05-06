@@ -3,7 +3,8 @@ my $title = 'The system\'s access control program must be configured to grant or
 my $severity = 'medium';
 my $description = 'If the system\'s access control program is not configured with appropriate rules for allowing and denying access to system network resources, services may be accessible to unauthorized hosts.';
 my $fix = 'Edit the /etc/hosts.allow and /etc/hosts.deny files to configure access restrictions.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

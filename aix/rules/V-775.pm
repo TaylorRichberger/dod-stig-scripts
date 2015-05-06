@@ -4,7 +4,8 @@ my $severity = 'medium';
 my $description = 'Permissions greater than 0700 could allow unauthorized users access to the root home directory.';
 my $fix = 'The root home directory will have permissions of 0700. Do not change the protections of the / directory. Use the following command to change protections for the root home directory.
 # chmod 0700 /root.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -31,9 +32,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -45,3 +51,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

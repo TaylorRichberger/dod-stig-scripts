@@ -4,7 +4,12 @@ my $severity = 'medium';
 my $description = 'Global initialization files are used to configure the user\'s shell environment upon login.  Malicious modification of these files could compromise accounts upon logon.';
 my $fix = 'Change the mode of the global initialization file(s) to 0444.
 # chmod 0444 <global initialization file>';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/profile';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -31,17 +36,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkMode($filename, 0755);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0555 $filename`;
 }
+
+1;

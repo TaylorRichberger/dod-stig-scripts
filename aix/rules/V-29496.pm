@@ -6,7 +6,8 @@ my $description = 'The ICMP attacks may be of the form of ICMP source quench att
 my $fix = 'Set the tcp_icmpsecure parameter to 1.
  
 # /usr/sbin/no -p -o tcp_icmpsecure=1';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -33,9 +34,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -47,3 +53,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

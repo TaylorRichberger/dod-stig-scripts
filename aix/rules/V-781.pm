@@ -6,7 +6,8 @@ my $description = 'If a user is assigned the GID of a group that does not exist 
 my $fix = 'Add a group to the system for each GID referenced without a corresponding group.  
 
 # smitty mkgroup';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -33,9 +34,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -47,3 +53,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

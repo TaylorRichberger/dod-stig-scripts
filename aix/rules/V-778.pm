@@ -5,7 +5,8 @@ my $description = 'Limiting the root account direct logins to only system consol
 my $fix = 'The root account can be protected from non-console device logins by setting rlogin = false in the root: stanza of the /etc/security/user file.
  
 #chsec -f /etc/security/user -s root -a rlogin=false';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

@@ -5,7 +5,8 @@ my $description = 'LDAP can be used to provide user authentication and account i
 my $fix = 'Change the permissions of the /etc/security/ldap/ldap.cfg file to 0644 or less permissive.
 
 # chmod 0644 /etc/security/ldap/ldap.cfg';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

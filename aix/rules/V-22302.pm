@@ -7,7 +7,8 @@ my $fix = 'Configure the system to enforce the correctness of the entire passwor
 
 Configure the system to use sha password hashing.
 #chsec -f /etc/security/login.cfg -s usw -a pwd_algorithm=ssha256';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -34,9 +35,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -48,3 +54,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

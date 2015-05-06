@@ -7,7 +7,8 @@ my $description = 'If the ftpaccess.ctl  file is not owned by root, an unauthori
 my $fix = 'Change the owner of the ftpaccess.ctl file to root.
 
 # chown root /etc/ftpaccess.ctl';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -34,9 +35,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -48,3 +54,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

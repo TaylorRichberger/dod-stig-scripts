@@ -8,7 +8,8 @@ Procedure:
 # chmod 0640 /path/to/system-log-file
 
 NOTE: Do not confuse system log files with audit logs.   Any subsystems that require less stringent permissions must be documented.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -35,9 +36,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -49,3 +55,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

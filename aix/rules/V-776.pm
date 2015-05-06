@@ -9,7 +9,8 @@ my $fix = 'Edit the root user\'s local initialization files. Change any found PA
 
 If the bash shell is installed, edit these additional files.
 # vi .bashrc .bash_profile';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -36,9 +37,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -50,3 +56,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

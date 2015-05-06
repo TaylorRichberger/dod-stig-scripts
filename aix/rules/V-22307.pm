@@ -12,7 +12,8 @@ Customize or modify the dictionary in /usr/share/dict/words as necessary.
 
 Add a dictionary list to /etc/security/user file with the chsec command.
 #chsec -f /etc/security/user -s default -a dictionlist=/usr/share/dict/words';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -39,9 +40,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -53,3 +59,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

@@ -3,7 +3,8 @@ my $title = 'SMB services should not be active';
 my $severity = 'col';
 my $description = 'Unless absolutely required, SMB services should not be used on systems at the core of a collections environment.  Instead secure mounts to the AIX system should be provided by an Encrypted linux internal SFTP host.  If SMB must be enabled, it\'s ports should only be allowed from known hosts (such as automation servers)';
 my $fix = '';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

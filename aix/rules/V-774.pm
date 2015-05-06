@@ -12,7 +12,8 @@ Procedure:
 # cp -r /.??* /root/.
 
 Then, edit the passwd file and change the root home directory to /root. The cp -r /.??* command copies all files and subdirectories of file names that begin with "." into the new root directory, which preserves the previous root environment. Must be in the "/" directory when executing the "cp" command.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -39,9 +40,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -53,3 +59,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

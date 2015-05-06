@@ -6,7 +6,8 @@ my $fix = 'If the portmap or rpcbind service is part of a removable package, con
 
 Procedure:
 # chmod 0000 /usr/sbin/portmap';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -33,9 +34,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -47,3 +53,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

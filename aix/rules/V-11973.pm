@@ -6,7 +6,12 @@ my $fix = 'Use the chsec command to set the minother setting to 1.
 
 # chsec -f /etc/security/user -s default -a minother=1
 # chuser minother=1 < user id >';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -33,17 +38,31 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    my ($output, $problemusers) = STIG::minSec($filename, 'minother', 1);
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my ($dummy, $problemusers) = STIG::minSec($filename, 'minother', 1);
+    my $output = '';
+    for my $user (@{$problemusers})
+    {
+        $output .= `chsec -f /etc/security/user -s $user -a minother=1`;
+    }
+    return $output;
 }
+
+1;

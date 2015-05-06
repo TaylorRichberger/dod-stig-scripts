@@ -5,7 +5,8 @@ my $description = 'DHCP allows for the unauthenticated configuration of network 
 my $fix = 'Disable the system\'s DHCP client. 
 
 Edit /etc/rc.tcpip, comment out the line starting dhcpcd.  Reboot the system to ensure the DHCP client has been disabled fully.  Configure a static IP for the system, if network connectivity is required.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

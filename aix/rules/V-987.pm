@@ -5,7 +5,8 @@ my $description = 'Permissions more permissive than 0600 (read, write and execut
 ';
 my $fix = 'Change the mode of the at.allow file.
 # chmod 0600 /var/adm/cron/at.allow';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -32,9 +33,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -46,3 +52,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

@@ -3,7 +3,8 @@ my $title = 'Database replication services should be controlled.';
 my $severity = 'col';
 my $description = 'Database replication services should be blocked from all external servers except those directly involved in data replication';
 my $fix = '';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

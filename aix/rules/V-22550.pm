@@ -4,7 +4,8 @@ my $severity = 'medium';
 my $description = 'ICMP redirect messages are used by routers to inform hosts that a more direct route exists for a particular destination. These messages modify the host\'s route table and are unauthenticated. An illicit ICMP redirect message could result in a man-in-the-middle attack.';
 my $fix = 'Configure the system to ignore IPv6 ICMP redirect messages.
 # /usr/sbin/no -p -o ipignoreredirects=1';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -31,9 +32,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -45,3 +51,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

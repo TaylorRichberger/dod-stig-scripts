@@ -6,7 +6,12 @@ my $fix = 'Change the group ownership of the global initialization file(s) with 
 
 Procedure:
 # chgrp system <global initialization file>';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/profile';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -33,17 +38,24 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    return STIG::checkGroups($filename, qr/^(sys|bin|system|security)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp system $filename`;
 }
+
+1;

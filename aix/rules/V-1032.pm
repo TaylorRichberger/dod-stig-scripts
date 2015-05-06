@@ -10,7 +10,12 @@ my $fix = 'Use SMIT or the chsec command to set the minimum password age to 1 we
 OR
 
 # smitty chuser';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -37,17 +42,32 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    my ($output, $problemusers) = STIG::minSec($filename, 'minage', 1);
+
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    my ($dummy, $problemusers) = STIG::minSec($filename, 'minage', 1);
+    for my $user (@{$problemusers})
+    {
+        $output .= `chsec -f /etc/security/user -s $user -a minage=1`;
+    }
+    return $output;
 }
+
+1;

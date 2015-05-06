@@ -3,7 +3,8 @@ my $title = 'TCP backlog queue sizes must be set appropriately.';
 my $severity = 'medium';
 my $description = 'To provide some mitigation to TCP DoS attacks, the clear_partial_conns parameter must be enabled.';
 my $fix = '# /usr/sbin/no -po clean_partial_conns=1';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

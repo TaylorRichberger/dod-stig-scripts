@@ -3,7 +3,8 @@ my $title = 'Global initialization files must contain the mesg -n or mesg n comm
 my $severity = 'low';
 my $description = 'If the mesg -n or mesg n command is not placed into the system profile, messaging can be used to cause a Denial of Service attack.';
 my $fix = 'Edit /etc/profile or another global initialization script and add the mesg -n command.';
-my $auto = 0;
+my $autotest = 0;
+my $autofix = 0;
 
 sub getId()
 {
@@ -30,9 +31,14 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
@@ -44,3 +50,5 @@ sub fix()
 {
     return 0;
 }
+
+1;

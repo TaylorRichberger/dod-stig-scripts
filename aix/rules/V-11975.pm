@@ -7,7 +7,12 @@ my $fix = 'Use the chsec command to set maxrepeats to 3.
 # chsec -f /etc/security/user -s default -a maxrepeats=3
 
 # chuser maxrepeats=3 < user id >';
-my $auto = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -34,17 +39,32 @@ sub getFix()
     return $fix;
 }
 
-sub auto()
+sub canTest()
 {
-    return $auto;
+    return $autotest;
+}
+
+sub canFix()
+{
+    return $autofix;
 }
 
 sub test()
 {
-    return 0;
+    my ($output, $problemusers) = STIG::maxSec($filename, 'maxrepeats', 3);
+
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my ($dummy, $problemusers) = STIG::maxSec($filename, 'maxrepeats', 3);
+    my $output = '';
+    for my $user (@{$problemusers})
+    {
+        $output .= `chsec -f /etc/security/user -s $user -a maxrepeats=3`;
+    }
+    return $output;
 }
+
+1;
