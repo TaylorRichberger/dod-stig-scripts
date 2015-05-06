@@ -1,0 +1,50 @@
+my $id = 'V-29510';
+my $title = 'The system must not have the talk or ntalk services active.';
+my $severity = 'medium';
+my $description = 'The talk and ntalk commands allow users on the same or different systems on converse. The talk daemons are started from the inetd process and run as root.  These unnecessary processes increase the attack vector of the system  and may cause Denial of Service by scrambling the users display. ';
+my $fix = 'Edit /etc/inetd.conf and comment out TCP and UDP for the talk service.   
+Edit /etc/inetd.conf and comment out TCP and UDP for the ntalk service.
+
+Restart the inetd service.   
+# refresh -s inetd';
+my $auto = 0;
+
+sub getId()
+{
+    return $id;
+}
+
+sub getTitle()
+{
+    return $title;
+}
+
+sub getSeverity()
+{
+    return $severity;
+}
+
+sub getDescription()
+{
+    return $description;
+}
+
+sub getFix()
+{
+    return $fix;
+}
+
+sub auto()
+{
+    return $auto;
+}
+
+sub test()
+{
+    return 0;
+}
+
+sub fix()
+{
+    return 0;
+}
