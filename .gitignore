@@ -18,3 +18,22 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
+
+# Temp files
+.*.sw?
+.sw?
+*.lc
+
+# Generated Documentation
+/html/
+/man/
+/latex/
+/userdoc.*
+test*
+*.pyc
+*.swp
+*.swo
+/log
+*-prefix
+/build
+/bin
