@@ -49,7 +49,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::checkGroups($filename, qr/^(sys|system)$/);
+    return STIG::GroupShouldMatch($filename, qr/^(sys|system)$/);
 }
 
 sub fix()

@@ -6,33 +6,42 @@ use feature 'say';
 for my $file (@ARGV)
 {
     require $file;
-    say(getSeverity() . ': ' . getTitle());
+    say("\t" . getSeverity() . ': ' . getTitle());
     my $testOutput = '';
-    if (canTest() && !($testOutput = test()))
+    if (canTest())
     {
-        say('Passed');
+        if ($testOutput = test())
+        {
+            say('FAILED');
+            if ($testOutput)
+            {
+                say($testOutput);
+            }
+            say(getDescription());
+            say('fix: ' . getFix());
+            if (canFix())
+            {
+                say('Autofixing of this problem is available, press enter to accept this, or type no to skip.');
+                my $answer = <STDIN>;
+                chomp($answer);
+                if ($answer =~ m/^n/i)
+                {
+                    say('skipping fix');
+                } else
+                {
+                    say('autofixing problem');
+                    fix();
+                }
+            }
+        } else
+        {
+            say('Passed');
+        }
     } else
     {
-        if ($testOutput)
-        {
-            say($testOutput);
-        }
+        say('COULD NOT TEST, CHECK MANUALLY');
         say(getDescription());
         say('fix: ' . getFix());
-        if (canFix())
-        {
-            say('Autofixing of this problem is available, press enter to accept this, or type no to skip.');
-            my $answer = <STDIN>;
-            chomp($answer);
-            if ($answer =~ m/^n/i)
-            {
-                say('skipping fix');
-            } else
-            {
-                say('autofixing problem');
-                fix();
-            }
-        }
     }
     say('');
 }

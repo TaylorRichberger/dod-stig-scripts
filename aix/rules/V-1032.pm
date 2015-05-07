@@ -54,7 +54,7 @@ sub canFix()
 
 sub test()
 {
-    my ($output, $problemusers) = STIG::minSec($filename, 'minage', 1);
+    my ($output, $problemusers) = STIG::SecShouldBeAtLeast($filename, 'minage', 1);
 
     return $output;
 }
@@ -62,10 +62,10 @@ sub test()
 sub fix()
 {
     my $output = '';
-    my ($dummy, $problemusers) = STIG::minSec($filename, 'minage', 1);
+    my ($dummy, $problemusers) = STIG::SecShouldBeAtLeast($filename, 'minage', 1);
     for my $user (@{$problemusers})
     {
-        $output .= `chsec -f /etc/security/user -s $user -a minage=1`;
+        $output .= `chsec -f $filename -s $user -a minage=1`;
     }
     return $output;
 }

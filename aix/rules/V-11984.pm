@@ -5,8 +5,12 @@ my $description = 'If the skeleton files are not protected, unauthorized personn
 my $fix = 'Change the ownership of skeleton files with incorrect mode.
 
 # chown root /etc/security/.profile /etc/security/mkuser.sys';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my @filenames = ('/etc/security/.profile', '/etc/security/mkuser', '/etc/skel');
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,22 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    for my $filename (@filenames)
+    {
+        $output .= STIG::OwnerShouldMatch($filename, qr/^(root|bin)$/);
+    }
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    for my $filename (@filenames)
+    {
+        $output .= `chown root $filename`;
+    }
+    return $output;
 }
 
 1;

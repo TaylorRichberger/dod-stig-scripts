@@ -50,17 +50,17 @@ sub canFix()
 
 sub test()
 {
-    my ($output, $problemusers) = STIG::minSec($filename, 'minlen', 14);
+    my ($output, $problemusers) = STIG::SecShouldBeAtLeast($filename, 'minlen', 14);
     return $output;
 }
 
 sub fix()
 {
-    my ($dummy, $problemusers) = STIG::minSec($filename, 'minlen', 14);
+    my ($dummy, $problemusers) = STIG::SecShouldBeAtLeast($filename, 'minlen', 14);
     my $output = '';
     for my $user (@{$problemusers})
     {
-        $output .= `chsec -f /etc/security/user -s $user -a minlen=14`;
+        $output .= `chsec -f $filename -s $user -a minlen=14`;
     }
     return $output;
 }

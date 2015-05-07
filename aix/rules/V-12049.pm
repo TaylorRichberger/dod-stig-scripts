@@ -6,8 +6,12 @@ my $fix = 'Remove the network analysis tool binary from the system.
 
 Procedure:
 # rm /usr/sbin/tcpdump';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/usr/sbin/tcpdump';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldNotExist($filename);
 }
 
 sub fix()
 {
-    return 0;
+    return `rm $filename`;
 }
 
 1;

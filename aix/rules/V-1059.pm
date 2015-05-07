@@ -50,7 +50,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::checkMode($filename, 0600);
+    return STIG::ModeShouldNotExceed($filename, 0600);
 }
 
 sub fix()

@@ -5,8 +5,12 @@ my $description = 'The SYSTEM attribute in /etc/security/user defines the mechan
 
 ';
 my $fix = 'Edit /etc/security/user and change any SYSTEM=NONE settings to a valid authentication setting.';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,7 +49,7 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return (STIG::SecShouldNotMatch($filename, 'SYSTEM', qr/\bNONE\b/))[0];
 }
 
 sub fix()

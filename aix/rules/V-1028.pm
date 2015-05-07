@@ -52,7 +52,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::checkMode($filename, 0644);
+    return STIG::ModeShouldNotExceed($filename, 0644);
 }
 
 sub fix()

@@ -50,17 +50,17 @@ sub canFix()
 
 sub test()
 {
-    my ($output, $problemusers) = STIG::maxSec($filename, 'maxage', 8);
+    my ($output, $problemusers) = STIG::SecShouldNotExceed($filename, 'maxage', 8);
     return $output;
 }
 
 sub fix()
 {
-    my ($dummy, $problemusers) = STIG::maxSec($filename, 'maxage', 8);
+    my ($dummy, $problemusers) = STIG::SecShouldNotExceed($filename, 'maxage', 8);
     my $output = '';
     for my $user (@{$problemusers})
     {
-        $output .= `chsec -f /etc/security/user -s $user -a maxage=8`;
+        $output .= `chsec -f $filename -s $user -a maxage=8`;
     }
     return $output;
 }

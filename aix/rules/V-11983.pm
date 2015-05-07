@@ -50,7 +50,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::checkGroups($filename, qr/^(sys|bin|system|security)$/);
+    return STIG::GroupShouldMatch($filename, qr/^(sys|bin|system|security)$/);
 }
 
 sub fix()

@@ -51,18 +51,18 @@ sub canFix()
 
 sub test()
 {
-    my ($output, $problemusers) = STIG::maxSec($filename, 'maxrepeats', 3);
+    my ($output, $problemusers) = STIG::SecShouldNotExceed($filename, 'maxrepeats', 3);
 
     return $output;
 }
 
 sub fix()
 {
-    my ($dummy, $problemusers) = STIG::maxSec($filename, 'maxrepeats', 3);
+    my ($dummy, $problemusers) = STIG::SecShouldNotExceed($filename, 'maxrepeats', 3);
     my $output = '';
     for my $user (@{$problemusers})
     {
-        $output .= `chsec -f /etc/security/user -s $user -a maxrepeats=3`;
+        $output .= `chsec -f $filename -s $user -a maxrepeats=3`;
     }
     return $output;
 }

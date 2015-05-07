@@ -5,8 +5,12 @@ my $description = 'A synchronized system clock is critical for the enforcement o
 my $fix = 'Change the mode of the ntp.conf file to 0640 or less permissive.
 
 # chmod 0640 /etc/ntp.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ntp.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0640);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0640 $filename`;
 }
 
 1;
