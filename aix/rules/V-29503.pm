@@ -4,8 +4,11 @@ my $severity = 'medium';
 my $description = 'The comsat daemon notifies users on incoming email.  This is an unnecessary service and is vulnerable to a flood attack.  Running unnecessary services increases the attack vector of the system.';
 my $fix = 'Edit /etc/inetd.conf and comment out comsat service line. Restart the inetd service.   
 # refresh -s inetd';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +47,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('comsat');
 }
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/inetd.conf', '/^comsat/d');
+    return `refresh -s inetd`;
 }
 
 1;

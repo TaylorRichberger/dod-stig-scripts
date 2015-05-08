@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'If the mode of the traceroute executable is more permissive than 0700, malicious code could be inserted by an attacker and triggered whenever the traceroute command is executed by authorized users.  Additionally, if an unauthorized user is granted executable permissions to the traceroute command, it could be used to gain information about the network topology behind the firewall.  This information may allow an attacker to determine trusted routers and other network information possibly  leading to system and network compromise.';
 my $fix = 'Change the mode of the traceroute command.
 # chmod 0700 /usr/bin/traceroute';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/usr/bin/traceroute';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0700);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0700 $filename`;
 }
 
 1;

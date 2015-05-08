@@ -5,8 +5,12 @@ my $description = 'Dynamic DNS updates transmit unencrypted information about a 
 my $fix = 'Configure the system\'s DHCP client to not send dynamic DNS updates.  
 
 Remove / comment updateDNS lines from the /etc/dhcpcd.ini and /etc/dhcpc.opt files.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my @filenames = ('/etc/dhcpcd.ini', '/etc/dhcpc.opt');
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,22 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    for my $filename (@filenames)
+    {
+        $output .= STIG::FileShouldNotContain($filename, qr/^updateDNS/);
+    }
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    for my $filename (@filenames)
+    {
+        $output .= STIG::sedi($filename, '/^updateDNS/d');
+    }
+    return $output;
 }
 
 1;

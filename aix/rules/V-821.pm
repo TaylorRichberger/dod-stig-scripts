@@ -6,8 +6,12 @@ my $fix = 'Change the ownership of the inetd.conf file to root or bin.
 
 Procedure:
 # chown root /etc/inetd.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/inetd.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldMatch($filename, qr/^(bin|root)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

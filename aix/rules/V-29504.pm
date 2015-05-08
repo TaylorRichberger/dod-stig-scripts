@@ -5,8 +5,11 @@ my $description = 'The daytime service runs as root from the inetd daemon and ca
 my $fix = 'Edit /etc/inetd.conf and comment out daytime service lines for both TCP and UDP protocols. 
 Restart the inetd service.   
 # refresh -s inetd';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +48,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('daytime');
 }
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/inetd.conf', '/^daytime/d');
+    return `refresh -s inetd`;
 }
 
 1;

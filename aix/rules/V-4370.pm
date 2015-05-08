@@ -6,8 +6,12 @@ my $fix = 'Change the group owner of the traceroute command to sys, bin, or syst
 
 Procedure:
 # chgrp system /usr/bin/traceroute';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/usr/bin/traceroute';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp system $filename`;
 }
 
 1;

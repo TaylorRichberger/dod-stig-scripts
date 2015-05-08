@@ -5,8 +5,11 @@ my $description = 'The parameter ip_nfrag provides an additional layer of protec
 my $fix = 'Set the ip_nfrag parameter to 200.
 
 # /usr/sbin/no -p -o ip_nfrag=200';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldNotExceed('ip_nfrag', 200);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'ip_nfrag=200'`;
 }
 
 1;

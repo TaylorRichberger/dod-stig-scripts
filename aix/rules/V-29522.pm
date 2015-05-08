@@ -5,8 +5,12 @@ my $description = 'Excessive permissions on the ftpaccess.ctl file could permit 
 my $fix = 'Change the mode of the /etc/ftpaccess.ctl file to 0640.
 
 # chmod 0640 /etc/ftpaccess.ctl';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ftpaccess.ctl';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0644);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $filename`;
 }
 
 1;

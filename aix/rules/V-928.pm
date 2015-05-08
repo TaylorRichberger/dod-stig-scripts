@@ -6,8 +6,12 @@ my $fix = 'Change the owner of the exports file to root.
 
 Example:
 # chown root /etc/exports';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/exports';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldBe($filename, 'root');
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

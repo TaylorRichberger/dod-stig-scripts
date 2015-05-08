@@ -5,8 +5,12 @@ my $description = 'To protect the integrity of scheduled system jobs and prevent
 ';
 my $fix = 'Change the mode of the crontab files.
 # chmod 0600 /var/spool/cron/crontabs/*';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $dir = '/var/spool/cron/crontabs';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,21 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    opendir(my $d, $dir);
+    while (my $filename = readdir($d))
+    {
+        if ($filename !~ m/^\.*$/)
+        {
+            $output .= STIG::ModeShouldNotExceed($filename, 0600);
+        }
+    }
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0600 $dir/*`;
 }
 
 1;

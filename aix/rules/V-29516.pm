@@ -7,8 +7,11 @@ my $fix = 'Edit the /etc/inetd.conf file and comment out the sprayd service line
 Restart the inetd service.   
 
 # refresh -s inetd';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -47,12 +50,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('sprayd');
 }
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/inetd.conf', '/^sprayd/d');
+    return `refresh -s inetd`;
 }
 
 1;

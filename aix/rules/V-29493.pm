@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'The /etc/netsvc.conf file is used to specify the ordering of name resolution for the sendmail command,  alias resolution for the sendmail command, and host name resolution routines.    Malicious changes could prevent the system from functioning correctly or compromise system security.';
 my $fix = 'Change the mode of the /etc/netsvc.conf file to 0644 or less permissive.
 # chmod 0644 /etc/netsvc.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/netsvc.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0644);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $filename`;
 }
 
 1;

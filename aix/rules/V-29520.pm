@@ -7,8 +7,12 @@ my $description = 'If the ftpaccess.ctl  file is not owned by root, an unauthori
 my $fix = 'Change the owner of the ftpaccess.ctl file to root.
 
 # chown root /etc/ftpaccess.ctl';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ftpaccess.ctl';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -47,12 +51,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldBe($filename, 'root');
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

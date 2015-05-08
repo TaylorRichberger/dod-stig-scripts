@@ -5,8 +5,14 @@ my $description = 'Limiting the root account direct logins to only system consol
 my $fix = 'The root account can be protected from non-console device logins by setting rlogin = false in the root: stanza of the /etc/security/user file.
  
 #chsec -f /etc/security/user -s root -a rlogin=false';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+my $stanza = 'root';
+
+use lib 'lib';
+use STIG;
+
 
 sub getId()
 {
@@ -45,12 +51,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::SecStanzaShouldEqual($filename, $stanza, 'rlogin', 'false');
 }
 
 sub fix()
 {
-    return 0;
+    return `chsec -f $filename -s $stanza -a rlogin=false`;
 }
 
 1;

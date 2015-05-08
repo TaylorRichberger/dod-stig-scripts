@@ -15,7 +15,6 @@ my $stanza = 'usw';
 use lib 'lib';
 use STIG;
 
-
 sub getId()
 {
     return $id;

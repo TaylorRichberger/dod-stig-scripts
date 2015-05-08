@@ -6,8 +6,12 @@ my $fix = 'Change the group owner of the /etc/security/ldap/ldap.cfg file to sec
 
 Procedure:
 # chgrp security /etc/security/ldap/ldap.cfg';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/ldap/ldap.cfg';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|system|security)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp security $filename`;
 }
 
 1;

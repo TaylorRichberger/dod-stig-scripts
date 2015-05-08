@@ -5,8 +5,11 @@ my $description = 'Disabling directed broadcast prevents packets directed to a g
 my $fix = 'Configure directed_broadcast  to 0.
 
 # /usr/sbin/no -p -o directed_broadcast=0';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldNotExceed('directed_broadcast', 0);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'directed_broadcast=0'`;
 }
 
 1;

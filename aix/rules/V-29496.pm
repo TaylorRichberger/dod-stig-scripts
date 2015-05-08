@@ -6,8 +6,11 @@ my $description = 'The ICMP attacks may be of the form of ICMP source quench att
 my $fix = 'Set the tcp_icmpsecure parameter to 1.
  
 # /usr/sbin/no -p -o tcp_icmpsecure=1';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldBeAtLeast('tcp_icmpsecure', 1);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'tcp_icmpsecure=1'`;
 }
 
 1;

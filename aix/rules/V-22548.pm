@@ -5,8 +5,11 @@ my $description = 'DHCP allows for the unauthenticated configuration of network 
 my $fix = 'Disable the system\'s DHCP client. 
 
 Edit /etc/rc.tcpip, comment out the line starting dhcpcd.  Reboot the system to ensure the DHCP client has been disabled fully.  Configure a static IP for the system, if network connectivity is required.';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,7 +48,7 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('dhcpcd');
 }
 
 sub fix()

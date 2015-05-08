@@ -12,8 +12,11 @@ Procedure:
 # cp -r /.??* /root/.
 
 Then, edit the passwd file and change the root home directory to /root. The cp -r /.??* command copies all files and subdirectories of file names that begin with "." into the new root directory, which preserves the previous root environment. Must be in the "/" directory when executing the "cp" command.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -52,12 +55,19 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldNotContain(qr{^root:[^:]*:\d*:\d*:[^:]*:\/:});
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    $output .= `mkdir /root`;
+    $output .= `chown root /root`;
+    $output .= `chgrp sys /root`;
+    $output .= `chmod 700 /root`;
+    $output .= `cp -r /.??* /root/.`;
+    $output .= `usermod -d /root root`;
+    return $output
 }
 
 1;

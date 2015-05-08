@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'If the /etc/syslog.conf file is not owned by root, unauthorized users could be allowed to view, edit, or delete important system messages handled by the syslog facility.';
 my $fix = 'Use the chown command to set the owner to root.
 # chown root /etc/syslog.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/syslog.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldBe($filename, 'root');
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

@@ -6,8 +6,11 @@ my $description = 'If a user is assigned the GID of a group that does not exist 
 my $fix = 'Add a group to the system for each GID referenced without a corresponding group.  
 
 # smitty mkgroup';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,7 +49,16 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+
+    setpwent();
+    while (my @pw = getpwent())
+    {
+        my $gid = $pw[3];
+        $output .= STIG::FileShouldContain(qr/^[^:]+:[^:]+:$gid:/);
+    }
+    endpwent();
+    return $output;
 }
 
 sub fix()

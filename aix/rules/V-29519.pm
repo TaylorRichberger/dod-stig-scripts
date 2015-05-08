@@ -8,8 +8,12 @@ my $fix = 'Create a /etc/ftpaccess.ctl file.
 Add at least the herald: /path to login banner to the /etc/ftpaccess.ctl file.
 
 #vi /etc/ftpaccess.ctl';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+my $filename = '/etc/ftpaccess.ctl';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -48,7 +52,7 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldExist($filename);
 }
 
 sub fix()

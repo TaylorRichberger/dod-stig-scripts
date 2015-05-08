@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'If the owner of the at.deny file is not set to root, bin, or sys, unauthorized users could be allowed to view or edit sensitive information contained within the file.';
 my $fix = 'Change the owner of the at.deny file.
 # chown root /var/adm/cron/at.deny';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/adm/cron/at.deny';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldMatch($filename, qr/^(root|bin|sys)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

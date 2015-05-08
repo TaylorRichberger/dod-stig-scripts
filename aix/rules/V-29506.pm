@@ -6,8 +6,11 @@ my $fix = 'Edit /etc/inetd.conf and comment out dtspc service line.
 
 Restart the inetd service.   
 # refresh -s inetd';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +49,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('dtsp');
 }
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/inetd.conf', '/^dtsp/d');
+    return `refresh -s inetd`;
 }
 
 1;

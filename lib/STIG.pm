@@ -21,6 +21,7 @@ sub sedi($$)
         $file->print($output);
     }
     close($file);
+    system('/bin/mv', $filename, "$filename.sedi.$$.backup");
     return system('/bin/mv', $tmp, $filename);
 }
 

@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'Cron daemon control files restrict the scheduling of automated tasks and must be protected.
 ';
 my $fix = '# chown root /var/adm/cron/cron.deny';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/adm/cron/cron.deny';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldMatch($filename, qr/^(root|bin|sys)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

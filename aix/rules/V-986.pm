@@ -5,6 +5,10 @@ my $description = 'Default accounts, such as bin, sys, adm, uucp, daemon, and ot
 my $fix = 'Remove the default accounts (such as bin, sys, adm, and others) from the at.allow file.';
 my $autotest = 0;
 my $autofix = 0;
+my $filename = '/var/adm/cron/at.allow';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,12 +47,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldNotContain($filename, qr/^(bin|sys|adm|uucp|daemon)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return STIG::sedi($filename, '/^\(bin\|sys\|adm\|uucp\|daemon\)$/d');
 }
 
 1;

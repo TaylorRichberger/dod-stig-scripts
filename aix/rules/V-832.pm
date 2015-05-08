@@ -6,8 +6,12 @@ my $fix = 'Change the mode of the /etc/mail/aliases file.
 
 Procedure:
 # chmod 0644 /etc/mail/aliases';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/mail/aliases';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0644);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $filename`;
 }
 
 1;

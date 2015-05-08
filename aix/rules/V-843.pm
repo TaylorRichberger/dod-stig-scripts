@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'Excessive permissions on the ftpusers file could permit unauthorized modification.  Unauthorized modification could result in Denial of Service to authorized FTP users or permit unauthorized users to access the FTP service.';
 my $fix = 'Change the mode of the ftpusers file to 0640.
 # chmod 0640 /etc/ftpusers';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ftpusers';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0640);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0640 $filename`;
 }
 
 1;

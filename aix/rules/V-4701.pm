@@ -4,8 +4,11 @@ my $severity = 'low';
 my $description = 'The finger service provides information about the system\'s users to network clients.  This information could expose information that could be used in subsequent attacks.
 ';
 my $fix = 'Edit /etc/inetd.conf and comment out the finger service line.  Restart the inetd service.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +47,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('finger');
 }
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/inetd.conf', '/^finger/d');
+    return `refresh -s inetd`;
 }
 
 1;

@@ -5,8 +5,12 @@ my $description = 'If the ftpaccess.ctl file is not group-owned by a system grou
 my $fix = 'Change the group owner of the /etc/ftpaccess.ctl file.
 
 # chgrp system /etc/ftpaccess.ctl';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ftpaccess.ctl';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp system $filename`;
 }
 
 1;

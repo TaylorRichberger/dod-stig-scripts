@@ -5,8 +5,12 @@ my $description = 'Permissions more permissive than 0600 (read, write and execut
 ';
 my $fix = 'Change the mode of the at.allow file.
 # chmod 0600 /var/adm/cron/at.allow';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/adm/cron/at.allow';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0600);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0600 $filename`;
 }
 
 1;

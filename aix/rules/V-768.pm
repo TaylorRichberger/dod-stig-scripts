@@ -10,8 +10,12 @@ OR
 
 # vi /etc/security/login.cfg 
 Add logindelay = 4 to the default stanza.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/login.cfg';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -50,12 +54,20 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my ($output, $problemusers) = STIG::SecShouldBeAtLeast($filename, 'logindelay', 4);
+
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    my ($dummy, $problemusers) = STIG::SecShouldBeAtLeast($filename, 'logindelay', 4);
+    for my $user (@{$problemusers})
+    {
+        $output .= `chsec -f $filename -s $user -a logindelay=4`;
+    }
+    return $output;
 }
 
 1;

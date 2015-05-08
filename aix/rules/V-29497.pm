@@ -5,8 +5,11 @@ my $description = 'The tcp_tcpsecure parameter provides protection for TCP conne
 my $fix = 'Set the tcp_tcpsecure parameter to 7.
 
 # /usr/sbin/no -p -o tcp_tcpsecure=7';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldBeAtLeast('tcp_tcpsecure', 7);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'tcp_tcpsecure=7'`;
 }
 
 1;

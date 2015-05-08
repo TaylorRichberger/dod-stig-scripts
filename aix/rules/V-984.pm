@@ -3,8 +3,11 @@ my $title = 'Access to the at utility must be controlled via the at.allow and/or
 my $severity = 'medium';
 my $description = 'The at facility selectively allows users to execute jobs at deferred times.  It is usually used for one-time jobs. The at.allow file selectively allows access to the at facility.  If there is no at.allow file, there is no ready documentation of who is allowed to submit at jobs.';
 my $fix = 'Create at.allow and/or at.deny files containing appropriate lists of users to be allowed or denied access to the "at" daemon.';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,7 +46,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $allow = STIG::FileShouldExist('/var/adm/cron/at.allow');
+    my $deny = STIG::FileShouldExist('/var/adm/cron/at.deny');
+    if ((length($allow) > 0) && (length($deny) > 0))
+    {
+        return $allow . $deny;
+    }
+    return '';
 }
 
 sub fix()

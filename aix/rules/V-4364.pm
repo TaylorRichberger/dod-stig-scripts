@@ -6,8 +6,12 @@ my $fix = 'Change the mode of the "at" directory to 0755.
 
 Procedure:
 # chmod 0755 < at directory >';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/spool/cron/atjobs';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0755);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 750 $filename`;
 }
 
 1;

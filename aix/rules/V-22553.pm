@@ -4,8 +4,11 @@ my $severity = 'medium';
 my $description = 'Source-routed packets allow the source of the packet to suggest routers forward the packet along a different path than configured on the router, which can be used to bypass network security measures. This requirement applies only to the forwarding of source-routed traffic, such as when IPv6 forwarding is enabled and the system is functioning as a router. ';
 my $fix = 'Configure the system so it does not forward IPv6 source-routed packets.  
 # /usr/sbin/no -p -o ip6srcrouteforward=0';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +47,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldNotExceed('ip6srcrouteforward', 0);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'ip6srcrouteforward=0'`;
 }
 
 1;

@@ -6,8 +6,12 @@ my $fix = 'Use the chsec command to configure the number of unsuccessful logins 
 
 # chsec -f /etc/security/user -s default -a loginretries=3 
 # chsec -f /etc/security/user -s <user id> -a loginretries=3';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,20 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my ($output, $problemusers) = STIG::SecShouldNotExceed($filename, 'loginretries', 3);
+
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    my ($dummy, $problemusers) = STIG::SecShouldNotExceed($filename, 'loginretries', 3);
+    for my $user (@{$problemusers})
+    {
+        $output .= `chsec -f $filename -s $user -a loginretries=3`;
+    }
+    return $output;
 }
 
 1;

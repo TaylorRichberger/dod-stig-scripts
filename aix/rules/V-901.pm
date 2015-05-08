@@ -6,8 +6,11 @@ my $fix = 'Change the mode of users\' home directories to 0750 or less permissiv
 
 Procedure (example):
 # chmod 0750 <home directory>';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +49,30 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+
+    setpwent();
+    while (my @pw = getpwent())
+    {
+        my $home = $pw[5];
+        $output .= STIG::ModeShouldNotExceed($home, 0750);
+    }
+    endpwent();
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+
+    setpwent();
+    while (my @pw = getpwent())
+    {
+        my $home = $pw[5];
+        $output .= `chmod 0750 $home`;
+    }
+    endpwent();
+    return $output;
 }
 
 1;

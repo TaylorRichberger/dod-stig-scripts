@@ -5,8 +5,12 @@ my $description = 'To protect the integrity of scheduled system jobs and to prev
 my $fix = 'Change the group owner of the crontab directories to sys, system, bin, or cron. 
 Procedure: # 
 chown cron /var/spool/cron/crontabs';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/spool/cron/crontabs';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|cron|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp cron $filename`;
 }
 
 1;

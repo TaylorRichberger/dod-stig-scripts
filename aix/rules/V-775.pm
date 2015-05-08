@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'Permissions greater than 0700 could allow unauthorized users access to the root home directory.';
 my $fix = 'The root home directory will have permissions of 0700. Do not change the protections of the / directory. Use the following command to change protections for the root home directory.
 # chmod 0700 /root.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/root';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0700);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0700 $filename`;
 }
 
 1;

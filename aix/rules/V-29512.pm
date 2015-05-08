@@ -4,8 +4,11 @@ my $severity = 'medium';
 my $description = 'The PCNFS service predates Microsoftâ€™s SMB specifications.   If a similar service is needed to share files from a Windows based OS to a UNIX based OS,  consider SAMBA.';
 my $fix = 'Edit /etc/inetd.conf and comment out the PCNFS service line. Restart the inetd service.   
 # refresh -s inetd';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +47,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ProgramShouldNotBeRunning('pcnfsd');
 }
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/inetd.conf', '/^pcnfsd/d');
+    return `refresh -s inetd`;
 }
 
 1;

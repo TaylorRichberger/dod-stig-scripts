@@ -3,8 +3,12 @@ my $title = 'The NFS export configuration file must have mode 0644 or less permi
 my $severity = 'low';
 my $description = 'Excessive permissions on the NFS export configuration file could allow unauthorized modification of the file, which could result in Denial of Service to authorized NFS exports and the creation of additional unauthorized exports.';
 my $fix = '# chmod 0644 /etc/exports';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/exports';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,12 +47,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0644);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $filename`;
 }
 
 1;

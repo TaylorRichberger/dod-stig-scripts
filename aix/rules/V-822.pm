@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'The Internet service daemon configuration files must be protected as malicious modification could cause Denial of Service or increase the attack surface of the system.';
 my $fix = 'Change the mode of the inetd.conf file.
 # chmod 0440 /etc/inetd.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/inetd.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0440);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0440 $filename`;
 }
 
 1;
