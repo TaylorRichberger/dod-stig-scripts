@@ -3,8 +3,11 @@ my $title = 'The system must not send IPv4 ICMP redirects.';
 my $severity = 'medium';
 my $description = 'ICMP redirect messages are used by routers to inform hosts a more direct route exists for a particular destination.  These messages contain information from the system\'s route table possibly revealing  portions of the network topology.';
 my $fix = '#/usr/sbin/no  -p -o ipsendredirects=0';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,12 +46,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldNotExceed('ipsendredirects', 0);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'ipsendredirects=0'`;
 }
 
 1;

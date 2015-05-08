@@ -3,8 +3,12 @@ my $title = 'The SSH daemon must use privilege separation.';
 my $severity = 'medium';
 my $description = 'SSH daemon privilege separation causes the SSH process to drop root privileges when not needed, which would decrease the impact of software vulnerabilities in the unprivileged section.';
 my $fix = 'Edit the /etc/ssh/sshd_config file and remove the UsePrivilegeSeparation setting or change the value of the UsePrivilegeSeparation setting to "yes".';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ssh/sshd_config';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,12 +47,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldNotContain($filename, qr/UsePrivilegeSeparation\s+no/);
 }
 
 sub fix()
 {
-    return 0;
+    return STIG::sedi($filename, '/UsePrivilegeSeparation/d');;
 }
 
 1;

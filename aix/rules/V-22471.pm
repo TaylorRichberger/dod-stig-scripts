@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'If a public host key file is modified by an unauthorized user, the SSH service may be compromised.';
 my $fix = 'Change the permissions for the SSH public host key files.
 # chmod 0644 /etc/ssh/*key.pub';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $dir = '/etc/ssh';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,21 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    opendir(my $d, $dir);
+    while (my $filename = readdir($d))
+    {
+        if ($filename =~ m/\.pub$/)
+        {
+            $output .= STIG::ModeShouldNotExceed($filename, 0644);
+        }
+    }
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $dir/*.pub`;
 }
 
 1;

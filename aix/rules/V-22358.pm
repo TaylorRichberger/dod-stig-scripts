@@ -6,8 +6,12 @@ my $fix = 'Change the group owner of the skeleton file to security.
 
 Procedure:
 # chgrp security /etc/security/.profile /etc/security/mkuser.sys';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my @filenames = ('/etc/security/.profile', '/etc/security/mkuser.sys');
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,22 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    for my $filename (@filenames)
+    {
+        $output .= STIG::GroupShouldBe($filename, 'security');
+    }
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    for my $filename (@filenames)
+    {
+        $output .= `chgrp security $filename`;
+    }
+    return $output;
 }
 
 1;

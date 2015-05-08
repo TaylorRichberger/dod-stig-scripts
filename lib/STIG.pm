@@ -2,6 +2,27 @@ use warnings;
 use strict;
 
 package STIG;
+# All tests return a blank string (which evaluates as false) for a succeeded test, and a message for a failed test
+
+# run sed and replace fields inline
+sub sedi($$)
+{
+    my ($filename, $script) = @_;
+    my $tmp = "$filename.sedi.$$";
+
+    # Copies the file first, to preserve permissions, and make the replacements essentially atomic.
+    system('/bin/cp', $filename, $tmp);
+
+    $output = `sed -e '$script' '$tmp'`;
+
+    open(my $file, '>', $tmp);
+    if ($file)
+    {
+        $file->print($output);
+    }
+    close($file);
+    return system('/bin/mv', $tmp, $filename);
+}
 
 sub ProgramShouldBeRunning($)
 {
@@ -13,6 +34,75 @@ sub ProgramShouldBeRunning($)
     } else
     {
         return "$program not found to be running";
+    }
+}
+
+sub ProgramShouldNotBeRunning($)
+{
+    my $program = $_[0];
+    my $ps = `ps -eo args`;
+    if ($ps =~ m/$program/)
+    {
+        return "$program found to be running";
+    } else
+    {
+        return '';
+    }
+}
+
+sub FileShouldContain($$)
+{
+    my ($filename, $pattern) = @_;
+    open (my $file, '<', $filename);
+    my $found = 0;
+    if ($file)
+    {
+        while (my $line = <$file>)
+        {
+            chomp($line);
+            if ($line =~ $pattern)
+            {
+                $found = 1;
+            }
+        }
+    } else
+    {
+        return "$filename could not be opened";
+    }
+    if ($found)
+    {
+        return '';
+    } else
+    {
+        return "$filename did not contain $pattern";
+    }
+}
+
+sub FileShouldNotContain($$)
+{
+    my ($filename, $pattern) = @_;
+    open (my $file, '<', $filename);
+    my $found = 0;
+    if ($file)
+    {
+        while (my $line = <$file>)
+        {
+            chomp($line);
+            if ($line =~ $pattern)
+            {
+                $found = 1;
+            }
+        }
+    } else
+    {
+        return "$filename could not be opened";
+    }
+    if ($found)
+    {
+        return "$filename contained $pattern";
+    } else
+    {
+        return '';
     }
 }
 
@@ -40,6 +130,7 @@ sub FileShouldExist($)
     }
 }
 
+# Will error if the mode is not at least as restrictive as the given one
 sub ModeShouldNotExceed($$)
 {
     my ($filename, $maxMode) = @_;
@@ -47,7 +138,7 @@ sub ModeShouldNotExceed($$)
     if (-e $filename)
     {
         my $mode = (stat($filename))[2];
-        # If the mode
+        # If the mode ANDed with the desired restrictiveness's inverse is not 0, the mode has bits that are outside the restriction
         if (($mode & 07777) & (~$maxMode))
         {
             return "$filename permissions are too permissive";
@@ -137,6 +228,7 @@ sub GroupShouldMatch($$)
     }
 }
 
+# Errors if the tunable is either empty or doesn't fit the condition
 sub checkTunable
 {
     my ($tunable, $threshold, $compare, $problem) = @_;
@@ -153,7 +245,7 @@ sub checkTunable
             return '';
         } else
         {
-            return "$tunable $problem $threshold (actual is $value)";
+            return "$tunable $problem '$threshold' (actual is '$value')";
         }
     } else
     {
@@ -162,6 +254,7 @@ sub checkTunable
 
 }
 
+# Errors if the stanza is not set, or if it violates the condition
 sub checkSecStanza
 {
     my ($filename, $stanza, $attribute, $threshold, $compare, $problem) = @_;
@@ -177,12 +270,13 @@ sub checkSecStanza
         $output = "stanza $stanza $attribute not set";
     } elsif (!&{$compare}($value, $threshold))
     {
-        $output = "stanza $stanza $attribute $problem $threshold (actual is $value)";
+        $output = "stanza $stanza $attribute $problem '$threshold' (actual is '$value')";
     }
 
     return $output;
 }
 
+# Errors if stanzas are set blank, the default is unset, or violate the condition
 sub checkSec
 {
     my ($filename, $attribute, $threshold, $compare, $problem) = @_;
@@ -201,7 +295,7 @@ sub checkSec
         if ($line =~ m/^([^\s#\*]+):\s*$/)
         {
             $user = $1;
-        } elsif ($line =~ m/^\s+$attribute\s*=\s*(.+)$/)
+        } elsif ($line =~ m/^\s+$attribute\s*=\s*(.*)$/)
         {
             if ($user eq 'default')
             {
@@ -209,13 +303,24 @@ sub checkSec
             }
 
             my $value = $1;
-            if (!&{$compare}($value, $threshold))
+            if (length($value) > 0)
+            {
+                if (!&{$compare}($value, $threshold))
+                {
+                    if ($output)
+                    {
+                        $output .= ', '
+                    }
+                    $output .= "User $user $attribute $problem '$threshold' (actual is '$value')";
+                    push(@problemusers, $user);
+                }
+            } else
             {
                 if ($output)
                 {
                     $output .= ', '
                 }
-                $output .= "User $user $attribute $problem $threshold (actual is $value)";
+                $output .= "User $user $attribute not set";
                 push(@problemusers, $user);
             }
         }
@@ -229,6 +334,7 @@ sub checkSec
     return ($output, \@problemusers);
 }
 
+# Convenience functions for the above
 sub TunableShouldBeAtLeast($$)
 {
     return checkTunable(@_, sub { return $_[0] >= $_[1]; }, 'lower than');

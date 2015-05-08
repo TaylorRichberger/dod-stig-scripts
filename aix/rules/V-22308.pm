@@ -4,8 +4,12 @@ my $severity = 'low';
 my $description = 'Configuring a supplemental group for users permitted to switch to the root user prevents unauthorized users from accessing the root account, even with knowledge of the root credentials.';
 my $fix = 'Use the chsec command to only allow users in the adm group to su to root.
 #chsec -f /etc/security/user -s root -a sugroups=adm';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/security/user';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::SecStanzaShouldNotEqual($filename, 'root', 'sugroups', '');
 }
 
 sub fix()
 {
-    return 0;
+    return `chsec -f $filename -s root -a sugroups=adm`;
 }
 
 1;

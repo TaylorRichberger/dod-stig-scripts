@@ -6,13 +6,13 @@ use feature 'say';
 for my $file (@ARGV)
 {
     require $file;
-    say("\t" . getSeverity() . ': ' . getTitle());
-    my $testOutput = '';
+    print('.');
     if (canTest())
     {
-        if ($testOutput = test())
+        if (my $testOutput = test())
         {
             say('FAILED');
+            say("\n\t" . getSeverity() . ': ' . getTitle());
             if ($testOutput)
             {
                 say($testOutput);
@@ -33,15 +33,14 @@ for my $file (@ARGV)
                     fix();
                 }
             }
-        } else
-        {
-            say('Passed');
+            say('');
         }
     } else
     {
         say('COULD NOT TEST, CHECK MANUALLY');
+        say("\n\t" . getSeverity() . ': ' . getTitle());
         say(getDescription());
         say('fix: ' . getFix());
+        say('');
     }
-    say('');
 }

@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'Unauthorized users must not be allowed to access or modify the /etc/syslog.conf file.';
 my $fix = 'Change the permissions of the syslog configuration file.
 # chmod 0640 /etc/syslog.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/syslog.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0640);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0640 $filename`;
 }
 
 1;

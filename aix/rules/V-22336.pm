@@ -5,8 +5,13 @@ my $description = 'The /etc/group file is critical to system security and must b
 my $fix = 'Change the group owner of the /etc/group file to security, bin, sys, or system.
 
 # chgrp security /etc/group';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/group';
+
+use lib 'lib';
+use STIG;
+
 
 sub getId()
 {
@@ -45,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|security|sys|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp security $filename`;
 }
 
 1;

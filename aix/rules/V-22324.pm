@@ -6,8 +6,13 @@ my $fix = 'Change the group owner of the /etc/hosts file to sys, bin, or system.
 
 Procedure:
 # chgrp system /etc/hosts';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/hosts';
+
+use lib 'lib';
+use STIG;
+
 
 sub getId()
 {
@@ -46,12 +51,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp system $filename`;
 }
 
 1;

@@ -5,8 +5,12 @@ my $description = 'The resolv.conf (or equivalent) file configures the system\'s
 ';
 my $fix = 'Change the owner of the /etc/resolv.conf file to root.
 # chown root /etc/resolv.conf';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/resolv.conf';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::OwnerShouldBe($filename, 'root');
 }
 
 sub fix()
 {
-    return 0;
+    return `chown root $filename`;
 }
 
 1;

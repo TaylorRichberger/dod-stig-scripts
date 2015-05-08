@@ -4,8 +4,12 @@ my $severity = 'medium';
 my $description = 'If an unauthorized user obtains the private SSH host key file, the host could be impersonated.';
 my $fix = 'Change the permissions for the SSH private host key files.
 # chmod 0600 /etc/ssh/*key';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $dir = '/etc/ssh';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -44,12 +48,21 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    opendir(my $d, $dir);
+    while (my $filename = readdir($d))
+    {
+        if ($filename =~ m/key$/)
+        {
+            $output .= STIG::ModeShouldNotExceed($filename, 0600);
+        }
+    }
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0600 $dir/*key`;
 }
 
 1;

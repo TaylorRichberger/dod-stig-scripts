@@ -3,8 +3,12 @@ my $title = 'The SSH daemon must restrict login ability to specific users and/or
 my $severity = 'medium';
 my $description = 'Restricting SSH logins to a limited group of users, such as system administrators, prevents password-guessing and other SSH attacks from reaching system accounts and other accounts not authorized for SSH access.';
 my $fix = 'Edit the SSH daemon configuration and add an AllowGroups directive.';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+my $filename = '/etc/ssh/sshd_config';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,7 +47,7 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldContain($filename, qr/AllowGroups/);
 }
 
 sub fix()

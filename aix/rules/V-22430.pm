@@ -6,8 +6,11 @@ my $fix = 'If the portmap or rpcbind service is part of a removable package, con
 
 Procedure:
 # chmod 0000 /usr/sbin/portmap';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,7 +49,7 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldNotExist('/usr/sbin/portmap');
 }
 
 sub fix()

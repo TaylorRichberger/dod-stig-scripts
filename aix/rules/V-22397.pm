@@ -5,8 +5,12 @@ my $description = 'If the group-owner of the at.allow file is not set to system,
 my $fix = 'Change the group owner of the at.allow file to sys, system, bin, or cron. 
 Procedure: 
 # chgrp cron /var/adm/cron/at.allow';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/adm/cron/at.allow';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|cron|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp cron $filename`;
 }
 
 1;

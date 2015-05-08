@@ -3,8 +3,12 @@ my $title = 'The SSH daemon must perform strict mode checking of home directory 
 my $severity = 'medium';
 my $description = 'If other users have access to modify user-specific SSH configuration files, they may be able to log into the system as another user.';
 my $fix = 'Edit the /etc/sshd/sshd_config file and remove the StrictModes setting or change the value of the StrictModes setting to "yes".';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/ssh/sshd_config';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,12 +47,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldNotContain($filename, qr/StrictModes\s+no/);
 }
 
 sub fix()
 {
-    return 0;
+    return STIG::sedi($filename, '/StrictModes/d');;
 }
 
 1;

@@ -5,8 +5,12 @@ my $description = 'The /etc/hosts file (or equivalent) configures local host nam
 my $fix = 'Change the mode of the /etc/hosts file to 0644 or less permissive.
 
 # chmod 0644 /etc/hosts';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/etc/hosts';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -45,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0644);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0644 $filename`;
 }
 
 1;

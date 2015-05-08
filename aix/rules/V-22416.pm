@@ -6,8 +6,11 @@ my $description = 'ICMP redirect messages are used by routers to inform hosts a 
 ';
 my $fix = 'Configure the system to ignore IPv4 ICMP redirect messages. 
 #/usr/sbin/no -p -o ipignoreredirects=1';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::TunableShouldBeAtLeast('ipignoreredirects', 1);
 }
 
 sub fix()
 {
-    return 0;
+    return `/usr/sbin/no -po 'ipignoreredirects=0'`;
 }
 
 1;

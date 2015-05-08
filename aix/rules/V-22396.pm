@@ -6,8 +6,12 @@ my $fix = 'Change the group ownership of the file to bin, sys, system, or cron.
 
 Procedure:
 # chgrp cron /var/spool/cron/atjobs';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/spool/cron/atjobs';
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::GroupShouldMatch($filename, qr/^(bin|sys|cron|system)$/);
 }
 
 sub fix()
 {
-    return 0;
+    return `chgrp cron $filename`;
 }
 
 1;

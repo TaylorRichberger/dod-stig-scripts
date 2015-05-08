@@ -12,8 +12,11 @@ Customize or modify the dictionary in /usr/share/dict/words as necessary.
 
 Add a dictionary list to /etc/security/user file with the chsec command.
 #chsec -f /etc/security/user -s default -a dictionlist=/usr/share/dict/words';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -52,9 +55,13 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    $output .= STIG::FileShouldExist('/usr/share/dict/words');
+    $output .= STIG::SecStanzaShouldEqual('/etc/security/user', 'default', 'dictionlist', '/usr/share/dict/words');
+    return $output;
 }
 
+# Can not fix, because the dictionary needs to be independently installed
 sub fix()
 {
     return 0;
