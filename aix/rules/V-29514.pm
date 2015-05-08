@@ -49,7 +49,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('time');
+    return STIG::FileShouldNotContain('/etc/inetd.conf', qr/^time/);
 }
 
 sub fix()

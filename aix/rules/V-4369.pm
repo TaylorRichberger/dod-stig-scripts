@@ -49,7 +49,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::OwnerShouldBe($filename, 'root')$/);
+    return STIG::OwnerShouldBe($filename, 'root');
 }
 
 sub fix()

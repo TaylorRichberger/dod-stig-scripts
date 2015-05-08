@@ -54,7 +54,7 @@ sub test()
 
 sub fix()
 {
-    return `/usr/sbin/no -po 'ipignoreredirects=0'`;
+    return `/usr/sbin/no -po 'ipignoreredirects=1'`;
 }
 
 1;

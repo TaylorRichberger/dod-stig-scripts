@@ -55,7 +55,22 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain(qr{^root:[^:]*:\d*:\d*:[^:]*:\/:});
+    setpwent();
+    while (my @pw = getpwent())
+    {
+        if ($pw[0] eq 'root')
+        {
+            if ($pw[7] eq '/')
+            {
+                return "root home dir is $pw[7]";
+            } else
+            {
+                return ''
+            }
+        }
+    }
+    endpwent();
+    return 'root not found?';
 }
 
 sub fix()

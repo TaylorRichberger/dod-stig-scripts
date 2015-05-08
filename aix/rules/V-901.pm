@@ -54,8 +54,12 @@ sub test()
     setpwent();
     while (my @pw = getpwent())
     {
-        my $home = $pw[5];
-        $output .= STIG::ModeShouldNotExceed($home, 0750);
+        my $home = $pw[7];
+        my $uid = $pw[1];
+        if ($uid > 200)
+        {
+            $output .= STIG::ModeShouldNotExceed($home, 0750);
+        }
     }
     endpwent();
     return $output;
@@ -68,8 +72,12 @@ sub fix()
     setpwent();
     while (my @pw = getpwent())
     {
-        my $home = $pw[5];
-        $output .= `chmod 0750 $home`;
+        my $home = $pw[7];
+        my $uid = $pw[1];
+        if ($uid > 200)
+        {
+            $output .= `chmod 0750 $home`;
+        }
     }
     endpwent();
     return $output;

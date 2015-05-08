@@ -55,7 +55,7 @@ sub test()
     while (my @pw = getpwent())
     {
         my $gid = $pw[3];
-        $output .= STIG::FileShouldContain(qr/^[^:]+:[^:]+:$gid:/);
+        $output .= STIG::FileShouldContain('/etc/group', qr/^[^:]+:[^:]+:$gid:/);
     }
     endpwent();
     return $output;

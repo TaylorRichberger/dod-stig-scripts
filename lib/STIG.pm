@@ -13,12 +13,12 @@ sub sedi($$)
     # Copies the file first, to preserve permissions, and make the replacements essentially atomic.
     system('/bin/cp', $filename, $tmp);
 
-    $output = `sed -e '$script' '$tmp'`;
+    my $output = `sed -e '$script' '$tmp'`;
 
     open(my $file, '>', $tmp);
     if ($file)
     {
-        $file->print($output);
+        print($file $output);
     }
     close($file);
     system('/bin/mv', $filename, "$filename.sedi.$$.backup");
