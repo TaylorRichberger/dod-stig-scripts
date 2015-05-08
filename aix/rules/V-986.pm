@@ -3,9 +3,10 @@ my $title = 'Default system accounts (with the exception of root) must not be li
 my $severity = 'medium';
 my $description = 'Default accounts, such as bin, sys, adm, uucp, daemon, and others, should never have access to the at facility.  This would create a possible vulnerability open to intruders or malicious users.';
 my $fix = 'Remove the default accounts (such as bin, sys, adm, and others) from the at.allow file.';
-my $autotest = 0;
-my $autofix = 0;
-my $filename = '/var/adm/cron/at.allow';
+my $autotest = 1;
+my $autofix = 1;
+my $allow = '/var/adm/cron/at.allow';
+my $deny = '/var/adm/cron/at.deny';
 
 use lib 'lib';
 use STIG;
@@ -47,12 +48,39 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^(bin|sys|adm|uucp|daemon)$/);
+    if (-e $allow)
+    {
+        return STIG::FileShouldNotContain($allow, qr/^(bin|sys|adm|uucp|daemon)$/);
+    } else
+    {
+        my $output = '';
+        $output .= STIG::FileShouldExist($deny);
+        $output .= STIG::FileShouldContain($deny, qr/^bin$/);
+        $output .= STIG::FileShouldContain($deny, qr/^sys$/);
+        $output .= STIG::FileShouldContain($deny, qr/^adm$/);
+        $output .= STIG::FileShouldContain($deny, qr/^uucp$/);
+        $output .= STIG::FileShouldContain($deny, qr/^daemon$/);
+        return $output;
+    }
 }
 
 sub fix()
 {
-    return STIG::sedi($filename, '/^\(bin\|sys\|adm\|uucp\|daemon\)$/d');
+    if (-e $allow)
+    {
+        return STIG::sedi($allow, '/^\(bin\|sys\|adm\|uucp\|daemon\)$/d');
+    } else
+    {
+        open(my $file, '>>', $deny);
+
+        print($file "\n");
+        print($file "bin\n");
+        print($file "sys\n");
+        print($file "adm\n");
+        print($file "uucp\n");
+        print($file "daemon\n");
+        close($file);
+    }
 }
 
 1;

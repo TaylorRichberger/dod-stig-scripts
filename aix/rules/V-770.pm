@@ -12,6 +12,9 @@ To remove an account with a blank password.
 my $autotest = 0;
 my $autofix = 0;
 
+use lib 'lib';
+use STIG;
+
 sub getId()
 {
     return $id;
@@ -49,7 +52,21 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+
+    open (my $file, '<', '/etc/passwd');
+    while (my $line = <$file>)
+    {
+        chomp($line);
+        my @pw = split(/:/, $line);
+        if ($pw[1] eq '!')
+        {
+            # Does not work for password attribute, annoyingly
+            $output .= STIG::SecStanzaShouldNotEqual('/etc/security/passwd', $pw[0], 'password', '');
+        }
+    }
+    close($file);
+    return '';
 }
 
 sub fix()

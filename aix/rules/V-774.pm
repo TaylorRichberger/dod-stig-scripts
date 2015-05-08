@@ -56,17 +56,14 @@ sub canFix()
 sub test()
 {
     setpwent();
-    while (my @pw = getpwent())
+    if (my @pw = getpwnam('root'))
     {
-        if ($pw[0] eq 'root')
+        if ($pw[7] eq '/')
         {
-            if ($pw[7] eq '/')
-            {
-                return "root home dir is $pw[7]";
-            } else
-            {
-                return ''
-            }
+            return "root home dir is $pw[7]";
+        } else
+        {
+            return ''
         }
     }
     endpwent();

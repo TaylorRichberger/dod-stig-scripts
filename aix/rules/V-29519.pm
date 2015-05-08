@@ -9,7 +9,7 @@ Add at least the herald: /path to login banner to the /etc/ftpaccess.ctl file.
 
 #vi /etc/ftpaccess.ctl';
 my $autotest = 1;
-my $autofix = 0;
+my $autofix = 1;
 my $filename = '/etc/ftpaccess.ctl';
 
 use lib 'lib';
@@ -57,7 +57,7 @@ sub test()
 
 sub fix()
 {
-    return 0;
+    return `touch $filename`;
 }
 
 1;
