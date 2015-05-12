@@ -49,7 +49,7 @@ sub test()
     setpwent();
     while (my @pw = getpwent())
     {
-        if (($pw[0] ne 'root') && ($pw[1] == 0))
+        if (($pw[0] ne 'root') && ($pw[2] == 0))
         {
             return "user $pw[0] has UID of $pw[1]";
         }

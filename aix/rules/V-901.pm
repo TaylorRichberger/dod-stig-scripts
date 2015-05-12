@@ -55,8 +55,8 @@ sub test()
     while (my @pw = getpwent())
     {
         my $home = $pw[7];
-        my $uid = $pw[1];
-        if ($uid > 200)
+        my $uid = $pw[2];
+        if (($uid >= 200) && ($uid < 100000))
         {
             $output .= STIG::ModeShouldNotExceed($home, 0750);
         }
@@ -74,7 +74,7 @@ sub fix()
     {
         my $home = $pw[7];
         my $uid = $pw[1];
-        if ($uid > 200)
+        if (($uid >= 200) && ($uid < 100000))
         {
             $output .= `chmod 0750 $home`;
         }
