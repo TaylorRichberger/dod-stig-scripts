@@ -6,6 +6,7 @@ my $description = 'The finger service provides information about the system\'s u
 my $fix = 'Edit /etc/inetd.conf and comment out the finger service line.  Restart the inetd service.';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -47,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('finger');
+    return STIG::FileShouldNotContain($filename, qr/^finger/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^finger/d');
+    STIG::sedi($filename, '/^finger/d');
     return `refresh -s inetd`;
 }
 

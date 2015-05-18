@@ -9,6 +9,7 @@ Restart the inetd service.
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -50,12 +51,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('sysstat');
+    return STIG::FileShouldNotContain($filename, qr/^sysstat/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^sysstat/d');
+    STIG::sedi($filename, '/^sysstat/d');
     return `refresh -s inetd`;
 }
 

@@ -8,6 +8,7 @@ Reload the inetd process.
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -49,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('telnet');
+    return STIG::FileShouldNotContain($filename, qr/^telnet/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^telnet/d');
+    STIG::sedi($filename, '/^telnet/d');
     return `refresh -s inetd`;
 }
 

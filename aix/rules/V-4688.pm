@@ -7,6 +7,7 @@ Refresh the inetd daemon.
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -48,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('rexec');
+    return STIG::FileShouldNotContain($filename, qr/^rexec/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^rexec/d');
+    STIG::sedi($filename, '/^rexec/d');
     return `refresh -s inetd`;
 }
 

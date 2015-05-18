@@ -6,6 +6,7 @@ my $fix = 'Edit /etc/inetd.conf and comment out POP3 the service line. Restart t
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -47,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('pop3');
+    return STIG::FileShouldNotContain($filename, qr/^pop3/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^pop3/d');
+    STIG::sedi($filename, '/^pop3/d');
     return `refresh -s inetd`;
 }
 

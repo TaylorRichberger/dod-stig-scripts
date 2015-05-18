@@ -7,6 +7,7 @@ Restart the inetd service.
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -48,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('daytime');
+    return STIG::FileShouldNotContain($filename, qr/^daytime/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^daytime/d');
+    STIG::sedi($filename, '/^daytime/d');
     return `refresh -s inetd`;
 }
 

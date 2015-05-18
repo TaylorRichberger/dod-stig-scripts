@@ -6,6 +6,7 @@ my $fix = 'Edit /etc/inetd.conf and comment out the PCNFS service line. Restart 
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -47,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('pcnfsd');
+    return STIG::FileShouldNotContain($filename, qr/^pcnfsd/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^pcnfsd/d');
+    STIG::sedi($filename, '/^pcnfsd/d');
     return `refresh -s inetd`;
 }
 

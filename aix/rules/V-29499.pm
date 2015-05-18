@@ -10,6 +10,8 @@ Restart the inetd service.
 #refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -51,12 +53,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('bootp');
+    return STIG::FileShouldNotContain($filename, qr/^bootp/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^bootp/d');
+    STIG::sedi($filename, '/^bootp/d');
     return `refresh -s inetd`;
 }
 

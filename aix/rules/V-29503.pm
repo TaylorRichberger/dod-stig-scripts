@@ -6,6 +6,7 @@ my $fix = 'Edit /etc/inetd.conf and comment out comsat service line. Restart the
 # refresh -s inetd';
 my $autotest = 1;
 my $autofix = 1;
+my $filename = '/etc/inetd.conf';
 
 use lib 'lib';
 use STIG;
@@ -47,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::ProgramShouldNotBeRunning('comsat');
+    return STIG::FileShouldNotContain($filename, qr/^comsat/);
 }
 
 sub fix()
 {
-    STIG::sedi('/etc/inetd.conf', '/^comsat/d');
+    STIG::sedi($filename, '/^comsat/d');
     return `refresh -s inetd`;
 }
 
