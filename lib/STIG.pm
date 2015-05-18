@@ -34,7 +34,7 @@ sub ProgramShouldBeRunning($)
         return '';
     } else
     {
-        return "$program not found to be running";
+        return "$program not found to be running\n";
     }
 }
 
@@ -44,7 +44,7 @@ sub ProgramShouldNotBeRunning($)
     my $ps = `ps -eo args`;
     if ($ps =~ m/$program/)
     {
-        return "$program found to be running";
+        return "$program found to be running\n";
     } else
     {
         return '';
@@ -68,14 +68,14 @@ sub FileShouldContain($$)
         }
     } else
     {
-        return "$filename could not be opened";
+        return "$filename could not be opened\n";
     }
     if ($found)
     {
         return '';
     } else
     {
-        return "$filename did not contain $pattern";
+        return "$filename did not contain $pattern\n";
     }
 }
 
@@ -96,11 +96,11 @@ sub FileShouldNotContain($$)
         }
     } else
     {
-        return "$filename could not be opened";
+        return "$filename could not be opened\n";
     }
     if ($found)
     {
-        return "$filename contained $pattern";
+        return "$filename contained $pattern\n";
     } else
     {
         return '';
@@ -112,7 +112,7 @@ sub FileShouldNotExist($)
     my $filename = $_[0];
     if (-e $filename)
     {
-        return "$filename exists";
+        return "$filename exists\n";
     } else
     {
         return '';
@@ -127,7 +127,7 @@ sub FileShouldExist($)
         return '';
     } else
     {
-        return "$filename does not exist";
+        return "$filename does not exist\n";
     }
 }
 
@@ -142,7 +142,7 @@ sub ModeShouldNotExceed($$)
         # If the mode ANDed with the desired restrictiveness's inverse is not 0, the mode has bits that are outside the restriction
         if (($mode & 07777) & (~$maxMode))
         {
-            return "$filename permissions are too permissive";
+            return "$filename permissions are too permissive\n";
         } else
         {
             return '';
@@ -164,7 +164,7 @@ sub OwnerShouldBe($$)
             return '';
         } else
         {
-            return "$filename not owned by $wantedOwner";
+            return "$filename not owned by $wantedOwner\n";
         }
     } else
     {
@@ -183,7 +183,7 @@ sub OwnerShouldMatch($$)
             return '';
         } else
         {
-            return "$filename not owned by $wantedOwners";
+            return "$filename not owned by $wantedOwners\n";
         }
     } else
     {
@@ -202,7 +202,7 @@ sub GroupShouldBe($$)
             return '';
         } else
         {
-            return "$filename not group owned by $wantedGroup";
+            return "$filename not group owned by $wantedGroup\n";
         }
     } else
     {
@@ -221,7 +221,7 @@ sub GroupShouldMatch($$)
             return '';
         } else
         {
-            return "$filename not group owned by $wantedGroups";
+            return "$filename not group owned by $wantedGroups\n";
         }
     } else
     {
@@ -246,11 +246,11 @@ sub checkTunable
             return '';
         } else
         {
-            return "$tunable $problem '$threshold' (actual is '$value')";
+            return "$tunable $problem '$threshold' (actual is '$value')\n";
         }
     } else
     {
-        return "$tunable is not showing any value.";
+        return "$tunable is not showing any value.\n";
     }
 
 }
@@ -268,10 +268,10 @@ sub checkSecStanza
     my $output = '';
     if ($value eq '')
     {
-        $output = "stanza $stanza $attribute not set";
+        $output = "stanza $stanza $attribute not set\n";
     } elsif (!&{$compare}($value, $threshold))
     {
-        $output = "stanza $stanza $attribute $problem '$threshold' (actual is '$value')";
+        $output = "stanza $stanza $attribute $problem '$threshold' (actual is '$value')\n";
     }
 
     return $output;
@@ -312,7 +312,7 @@ sub checkSec
                     {
                         $output .= ', '
                     }
-                    $output .= "User $user $attribute $problem '$threshold' (actual is '$value')";
+                    $output .= "User $user $attribute $problem '$threshold' (actual is '$value')\n";
                     push(@problemusers, $user);
                 }
             } else
@@ -321,14 +321,14 @@ sub checkSec
                 {
                     $output .= ', '
                 }
-                $output .= "User $user $attribute not set";
+                $output .= "User $user $attribute not set\n";
                 push(@problemusers, $user);
             }
         }
     }
     if (!$default)
     {
-        $output .= "default has no $attribute";
+        $output .= "default has no $attribute\n";
         push(@problemusers, 'default');
     }
 
