@@ -53,7 +53,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^comsat/d');
+    STIG::sedi($filename, 's/^comsat/#&/');
     return `refresh -s inetd`;
 }
 

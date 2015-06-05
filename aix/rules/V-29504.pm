@@ -54,7 +54,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^daytime/d');
+    STIG::sedi($filename, 's/^daytime/#&/');
     return `refresh -s inetd`;
 }
 

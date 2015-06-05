@@ -54,7 +54,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^discard/d');
+    STIG::sedi($filename, 's/^discard/#&/');
     return `refresh -s inetd`;
 }
 

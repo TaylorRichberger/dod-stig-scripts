@@ -53,7 +53,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^finger/d');
+    STIG::sedi($filename, 's/^finger/#&/');
     return `refresh -s inetd`;
 }
 

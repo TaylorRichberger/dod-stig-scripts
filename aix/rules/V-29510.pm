@@ -56,7 +56,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^n*talk/d');
+    STIG::sedi($filename, 's/^n*talk/#&/');
     return `refresh -s inetd`;
 }
 

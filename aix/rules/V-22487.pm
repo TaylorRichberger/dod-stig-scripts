@@ -52,7 +52,7 @@ sub test()
 
 sub fix()
 {
-    return STIG::sedi($filename, '/RhostsRSAAuthentication/d');;
+    return STIG::sedi($filename, 's/^RhostsRSAAuthentication/#&/');;
 }
 
 1;

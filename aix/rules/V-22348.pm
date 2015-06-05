@@ -64,7 +64,7 @@ sub test()
 
 sub fix()
 {
-    return STIG::sedi($filename, 's/\([^:]*\):[^:]*:/\1:!:/');
+    return STIG::sedi($filename, 's/^\([^:]*\):[^:]*:/\1:!:/');
 }
 
 1;

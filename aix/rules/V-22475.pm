@@ -53,7 +53,7 @@ sub test()
 
 sub fix()
 {
-    return STIG::sedi($filename, '/KerberosAuthentication/d');;
+    return STIG::sedi($filename, 's/^KerberosAuthentication/#&/');;
 ;
 }
 

@@ -55,7 +55,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^ttdbserver/d');
+    STIG::sedi($filename, 's/^ttdbserver/#&/');
     return `refresh -s inetd`;
 }
 

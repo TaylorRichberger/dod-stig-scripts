@@ -55,7 +55,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^dtsp/d');
+    STIG::sedi($filename, 's/^dtsp/#&/');
     return `refresh -s inetd`;
 }
 

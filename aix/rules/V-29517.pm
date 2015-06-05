@@ -56,7 +56,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^rstatd/d');
+    STIG::sedi($filename, 's/^rstatd/#&/');
     return `refresh -s inetd`;
 }
 

@@ -52,7 +52,7 @@ sub test()
 
 sub fix()
 {
-    return STIG::sedi($filename, 's/^Compression/d');;
+    return STIG::sedi($filename, 's/^Compression/#&/');;
 }
 
 1;

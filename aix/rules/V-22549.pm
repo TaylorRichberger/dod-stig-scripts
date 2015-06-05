@@ -62,7 +62,7 @@ sub fix()
     my $output = '';
     for my $filename (@filenames)
     {
-        $output .= STIG::sedi($filename, '/^updateDNS/d');
+        $output .= STIG::sedi($filename, 's/^updateDNS/#&/');
     }
     return $output;
 }

@@ -53,7 +53,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^pcnfsd/d');
+    STIG::sedi($filename, 's/^pcnfsd/#&/');
     return `refresh -s inetd`;
 }
 

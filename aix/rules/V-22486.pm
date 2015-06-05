@@ -52,7 +52,7 @@ sub test()
 
 sub fix()
 {
-    return STIG::sedi($filename, '/UsePrivilegeSeparation/d');;
+    return STIG::sedi($filename, 's/^UsePrivilegeSeparation/#&/');;
 }
 
 1;

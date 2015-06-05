@@ -52,7 +52,7 @@ sub test()
 
 sub fix()
 {
-    return STIG::sedi($filename, '/StrictModes/d');;
+    return STIG::sedi($filename, 's/^StrictModes/#&/');;
 }
 
 1;

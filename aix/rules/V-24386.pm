@@ -55,7 +55,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^telnet/d');
+    STIG::sedi($filename, 's/^telnet/#&/');
     return `refresh -s inetd`;
 }
 

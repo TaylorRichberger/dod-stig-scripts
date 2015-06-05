@@ -53,7 +53,7 @@ sub test()
 
 sub fix()
 {
-    STIG::sedi($filename, '/^pop3/d');
+    STIG::sedi($filename, 's/^pop3/#&/');
     return `refresh -s inetd`;
 }
 
