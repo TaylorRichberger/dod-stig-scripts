@@ -54,19 +54,18 @@ sub test()
 {
     my $output = '';
 
-    open (my $file, '<', '/etc/passwd');
+    open (my $file, '<', '/etc/security/passwd');
     while (my $line = <$file>)
     {
         chomp($line);
-        my @pw = split(/:/, $line);
-        if ($pw[1] eq '!')
+        if ($line =~ m/password =\s*$/)
         {
             # Does not work for password attribute, annoyingly
-            $output .= STIG::SecStanzaShouldNotEqual('/etc/security/passwd', $pw[0], 'password', '');
+            $output .= 'password attribute blank in /etc/security/passwd';
         }
     }
     close($file);
-    return '';
+    return $output;
 }
 
 sub fix()

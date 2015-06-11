@@ -6,8 +6,11 @@ my $fix = 'Change the mode for system command files to 0755 or less permissive.
 
 Procedure:
 # chmod 0755 <filename>';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -46,7 +49,20 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    opendir(my $dir, '/usr/bin');
+    while (my $file = readdir($dir))
+    {
+        $output .= STIG::ModeShouldNotExceed("/usr/bin/$file", 07755);
+    }
+    closedir($dir);
+    opendir($dir, '/usr/sbin');
+    while (my $file = readdir($dir))
+    {
+        $output .= STIG::ModeShouldNotExceed("/usr/sbin/$file", 07755);
+    }
+    closedir($dir);
+    return $output;
 }
 
 sub fix()

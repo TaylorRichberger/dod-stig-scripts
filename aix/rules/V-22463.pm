@@ -3,8 +3,11 @@ my $title = 'The SSH client must be configured to only use Message Authenticatio
 my $severity = 'medium';
 my $description = 'DoD information systems are required to use FIPS 140-2 approved cryptographic hash functions.';
 my $fix = 'Edit the SSH client configuration and remove any MACs other than hmac-sha1.  If necessary, add a MACs line.';
-my $autotest = 0;
+my $autotest = 1;
 my $autofix = 0;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,7 +46,7 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::FileShouldContain('/etc/ssh/sshd_config', qr/^MACs\s+hmac-sha1$/);
 }
 
 sub fix()

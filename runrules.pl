@@ -3,8 +3,16 @@ use strict;
 use warnings;
 use feature 'say';
 
+my $testonly = 0;
+
 for my $file (@ARGV)
 {
+    if ($file eq '-t')
+    {
+        $testonly = 1;
+        next;
+    }
+
     require $file;
     print('.');
     if (canTest())
@@ -19,7 +27,7 @@ for my $file (@ARGV)
             }
             say(getDescription());
             say('fix: ' . getFix());
-            if (canFix())
+            if ((!$testonly) and canFix())
             {
                 say('Autofixing of this problem is available, press enter to accept this, or type no to skip.');
                 my $answer = <STDIN>;

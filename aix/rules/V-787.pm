@@ -8,8 +8,9 @@ Procedure:
 # chmod 0640 /path/to/system-log-file
 
 NOTE: Do not confuse system log files with audit logs.   Any subsystems that require less stringent permissions must be documented.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+my $filename = '/var/log/syslog';
 
 sub getId()
 {
@@ -48,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    return STIG::ModeShouldNotExceed($filename, 0640);
 }
 
 sub fix()
 {
-    return 0;
+    return `chmod 0640 $filename`;
 }
 
 1;
