@@ -19,7 +19,8 @@ for my $file (@ARGV)
     {
         if (my $testOutput = test())
         {
-            say('FAILED');
+            print("\n");
+            say('==================  FAILED  ==================');
             say("\n\t" . getSeverity() . ': ' . getTitle());
             if ($testOutput)
             {
@@ -45,7 +46,8 @@ for my $file (@ARGV)
         }
     } else
     {
-        say('COULD NOT TEST, CHECK MANUALLY');
+        print("\n");
+        say('======  COULD NOT TEST, CHECK MANUALLY  ======');
         say("\n\t" . getSeverity() . ': ' . getTitle());
         say(getDescription());
         say('fix: ' . getFix());
