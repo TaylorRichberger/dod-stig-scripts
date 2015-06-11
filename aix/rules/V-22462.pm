@@ -46,7 +46,7 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain('/etc/ssh/sshd_config', /^Ciphers.+?cbc/);
+    return STIG::FileShouldNotContain('/etc/ssh/sshd_config', qr/^Ciphers.+?cbc/);
 }
 
 sub fix()
