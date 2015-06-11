@@ -30,6 +30,7 @@ nytprof.out
 /latex/
 /userdoc.*
 test*
+!/test.sh
 *.pyc
 *.swp
 *.swo
