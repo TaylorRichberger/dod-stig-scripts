@@ -9,8 +9,8 @@ my $fix = 'Remove or configure a password for any account with a blank password.
 
 To remove an account with a blank password.
 # smitty rmuser';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
 
 use lib 'lib';
 use STIG;
@@ -70,7 +70,8 @@ sub test()
 
 sub fix()
 {
-    return 0;
+    STIG::sedi('/etc/security/passwd', 's/password = *$/password = */');
+    return '';
 }
 
 1;

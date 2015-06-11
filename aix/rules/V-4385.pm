@@ -3,8 +3,11 @@ my $title = 'The system must not use .forward files.';
 my $severity = 'medium';
 my $description = 'The .forward file allows users to automatically forward mail to another system. Use of .forward files could allow the unauthorized forwarding of mail and could potentially create mail loops which could degrade system performance.';
 my $fix = 'Remove .forward files from the system.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
 
 sub getId()
 {
@@ -43,12 +46,31 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+    setpwent();
+    while (my @pw = getpwent())
+    {
+        my $home = $pw[7];
+        $output .= STIG::FileShouldNotExist("$home/.forward");
+    }
+    endpwent();
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+    setpwent();
+    while (my @pw = getpwent())
+    {
+        my $home = $pw[7];
+        if (-e "$home/.forward")
+        {
+            $output .= `rm $home/.forward`;
+        }
+    }
+    endpwent();
+    return $output;
 }
 
 1;
