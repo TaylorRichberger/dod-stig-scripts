@@ -13,8 +13,12 @@ Procedure:
 
 Procedure:
 Identify and edit the initialization file referencing the world-writable directory and remove it from the PATH variable.';
-my $autotest = 0;
-my $autofix = 0;
+my $autotest = 1;
+my $autofix = 1;
+
+use lib 'lib';
+use STIG;
+use Env qw(PATH);
 
 sub getId()
 {
@@ -53,12 +57,26 @@ sub canFix()
 
 sub test()
 {
-    return 0;
+    my $output = '';
+
+    for my $path (split(/:/, $PATH))
+    {
+        $output .= STIG::ModeShouldNotExceed($path, 07775);
+    }
+    
+    return $output;
 }
 
 sub fix()
 {
-    return 0;
+    my $output = '';
+
+    for my $path (split(/:/, $PATH))
+    {
+        $output .= `chmod go-w $path`;
+    }
+    
+    return $output;
 }
 
 1;
