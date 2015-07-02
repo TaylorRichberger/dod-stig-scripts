@@ -24,6 +24,9 @@ while (my $row = $csv->getline($file)) {
     printf($idfile "my \$autotest = 0;\n");
     printf($idfile "my \$autofix = 0;\n");
     printf($idfile "\n");
+    printf($idfile "use lib 'lib';\n");
+    printf($idfile "use STIG;\n");
+    printf($idfile "\n");
     printf($idfile "sub getId()\n{\n    return \$id;\n}\n\n");
     printf($idfile "sub getTitle()\n{\n    return \$title;\n}\n\n");
     printf($idfile "sub getSeverity()\n{\n    return \$severity;\n}\n\n");
