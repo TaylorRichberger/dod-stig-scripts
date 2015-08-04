@@ -1,0 +1,4 @@
+#!/bin/sh
+
+yum update
+
