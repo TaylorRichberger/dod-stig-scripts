@@ -29,7 +29,7 @@ nytprof.out
 /man/
 /latex/
 /userdoc.*
-test*
+/test*
 !/test.sh
 *.pyc
 *.swp
