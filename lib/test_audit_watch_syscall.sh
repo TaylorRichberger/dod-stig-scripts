@@ -1,0 +1,10 @@
+#!/bin/bash
+
+syscall="$1"
+
+if ! auditctl -l | grep syscall | grep -q $syscall; then
+    echo "$syscall is not audited"
+    exit 1
+fi
+
+exit 0

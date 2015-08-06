@@ -1,0 +1,14 @@
+#!/bin/sh
+
+syscall="$1"
+key="$2"
+
+bits=32
+
+if uname -p | grep -qF 64; then
+    bits=64
+fi
+
+echo "-a always,exit -F arch=b$bits -S $syscall -k $2" >> /etc/audit/audit.rules
+
+auditctl -R /etc/audit/audit.rules
