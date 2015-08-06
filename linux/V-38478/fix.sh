@@ -1,4 +1,3 @@
 #!/bin/sh
 
-service rhnsd stop
-chkconfig --level 0123456 rhnsd off
+./lib/fix_service_stop.sh rhnsd

@@ -1,3 +1,5 @@
 #!/bin/sh
 
-exit 0
+./lib/test_perms.sh /etc/grub.sh 600
+
+exit $?

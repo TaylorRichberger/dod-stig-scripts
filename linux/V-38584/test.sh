@@ -1,3 +1,4 @@
 #!/bin/sh
 
-exit 0
+./lib/test_service_stop.sh xinetd
+exit $?

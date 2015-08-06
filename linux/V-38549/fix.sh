@@ -1,4 +1,4 @@
 #!/bin/sh
 
 chkconfig ip6tables on
-service ip6tables start
+./lib/fix_service_start.sh ip6tables

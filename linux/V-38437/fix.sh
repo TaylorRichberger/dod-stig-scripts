@@ -1,4 +1,3 @@
 #!/bin/sh
 
-service autofs stop
-chkconfig --level 0123456 autofs off
+./lib/fix_service_stop.sh autofs

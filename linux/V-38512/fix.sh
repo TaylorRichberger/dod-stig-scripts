@@ -1,5 +1,4 @@
 #!/bin/sh
 
 yum install iptables
-chkconfig iptables on
-service iptables start
+./lib/fix_service_start.sh iptables
