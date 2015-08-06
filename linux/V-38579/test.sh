@@ -1,5 +1,4 @@
 #!/bin/sh
 
-./lib/test_owner.sh /etc/grub.conf root
+test_owner.sh /etc/grub.conf root
 
-exit $?

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./lib/fix_sysctl.sh net.ipv4.ip_forward 0
+fix_sysctl.sh net.ipv4.ip_forward 0

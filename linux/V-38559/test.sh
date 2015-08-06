@@ -1,5 +1,4 @@
 #!/bin/sh
 
-./lib/test_audit_watch_syscall.sh lremovexattr
+test_audit_watch_syscall.sh lremovexattr
 
-exit $?

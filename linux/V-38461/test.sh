@@ -1,4 +1,3 @@
 #!/bin/sh
 
-./lib/test_perms.sh /etc/group 644
-exit $?
+test_perms.sh /etc/group 644

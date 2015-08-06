@@ -1,4 +1,3 @@
 #!/bin/sh
 
-./lib/test_owner.sh /etc/gshadow root
-exit $?
+test_owner.sh /etc/gshadow root

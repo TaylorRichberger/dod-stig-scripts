@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./lib/fix_service_stop.sh rsh-server
+fix_service_stop.sh rsh-server

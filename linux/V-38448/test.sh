@@ -1,4 +1,3 @@
 #!/bin/sh
 
-./lib/test_group.sh /etc/gshadow root
-exit $?
+test_group.sh /etc/gshadow root

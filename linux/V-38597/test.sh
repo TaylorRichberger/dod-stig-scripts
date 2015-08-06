@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exit 0
+test_sysctl.sh exec-shield 1
