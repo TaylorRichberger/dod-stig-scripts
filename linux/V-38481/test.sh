@@ -5,5 +5,4 @@ if yum check-update >/dev/null 2>&1; then
 fi
 
 echo 'updates need to be installed'
-yum check-update
-exit 0
+exit 1
