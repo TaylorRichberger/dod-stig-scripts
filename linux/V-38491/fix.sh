@@ -6,5 +6,3 @@ fi
 
 find / -type f -name '.rhosts' -delete
 
-exit 0
-
