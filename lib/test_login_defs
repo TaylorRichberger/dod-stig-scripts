@@ -14,5 +14,5 @@ if [ "$value" $operator "$threshold" ]; then
     exit 0
 fi
 
-echo "$value should be $threshold, but it is $value instead"
+echo "$item should be $threshold, but it is $value instead"
 exit 1
