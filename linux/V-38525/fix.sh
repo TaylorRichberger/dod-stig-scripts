@@ -1,5 +1,5 @@
 #!/bin/sh
 
-fix_audit_watch_syscall settimeofday
-fix_audit_watch_syscall clock_settime
-fix_audit_watch_syscall adjtimex
+fix_audit_watch_syscall settimeofday audit_time_rules
+fix_audit_watch_syscall clock_settime audit_time_rules
+fix_audit_watch_syscall adjtimex audit_time_rules
