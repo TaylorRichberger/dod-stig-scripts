@@ -1,3 +1,3 @@
 #!/bin/sh
 
-chmod 0600 /etc/grub.sh
+chmod 0600 /etc/grub.conf

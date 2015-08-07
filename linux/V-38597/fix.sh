@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_sysctl exec-shield 1
+fix_sysctl kernel.exec-shield 1

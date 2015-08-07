@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_sysctl exec-shield 1
+test_sysctl kernel.exec-shield 1
