@@ -47,7 +47,7 @@ while [ $# -gt 0 ]; do
             fi
         fi
     else
-        echo "Can not test.  Please run manual tests"
+        echo "Can not test.  You must test manually."
         printrule "$ruledir/vars.sh"
     fi
 done
