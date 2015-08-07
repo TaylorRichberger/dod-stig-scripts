@@ -3,7 +3,7 @@
 file="$1"
 perms=0"$2"
 
-mode=0"$(stat -c %a /etc/gshadow)"
+mode=0"$(stat -c %a "$file")"
 
 # if mode has more unspecified bits that aren't in perms
 if [ "$((($mode | $wantedmode) != $wantedmode))" -ne 0 ]; then
