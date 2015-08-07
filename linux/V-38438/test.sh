@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if grep -qE 'audit=1' /etc/grub.conf; then
-    exit 1
+    exit 0
 fi
 echo 'auditing is disabled'
-exit 0
+exit 1
