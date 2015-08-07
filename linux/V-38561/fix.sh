@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_audit_watch_syscall_uid.sh lsetxattr perm_mod
+fix_audit_watch_syscall_uid lsetxattr perm_mod

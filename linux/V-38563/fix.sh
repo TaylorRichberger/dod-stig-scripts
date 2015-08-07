@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_audit_watch_syscall_uid.sh removexattr perm_mod
+fix_audit_watch_syscall_uid removexattr perm_mod
