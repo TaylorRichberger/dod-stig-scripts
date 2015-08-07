@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_group.sh /etc/grub.conf root
+test_group /etc/grub.conf root
 

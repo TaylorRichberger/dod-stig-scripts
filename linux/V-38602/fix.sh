@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_stop.sh rlogin
+fix_service_stop rlogin

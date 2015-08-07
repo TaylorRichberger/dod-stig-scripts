@@ -1,0 +1,8 @@
+#!/bin/bash
+
+item="$1"
+value="$2"
+
+sed -i "/^[[:space:]]*$item[[:space:]].*/d" /etc/login.defs
+
+echo $item $value >> /etc/login.defs

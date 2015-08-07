@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_start.sh crond
+fix_service_start crond

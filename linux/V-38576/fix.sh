@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_login_defs.sh ENCRYPT_METHOD SHA512
+fix_login_defs ENCRYPT_METHOD SHA512

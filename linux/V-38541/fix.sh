@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_audit_watch_file.sh /etc/selinux MAC-policy
+fix_audit_watch_file /etc/selinux MAC-policy

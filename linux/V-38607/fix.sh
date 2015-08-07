@@ -1,4 +1,4 @@
 #!/bin/sh
 
-fix_sshd_config.sh Protocol 2
+fix_sshd_config Protocol 2
 

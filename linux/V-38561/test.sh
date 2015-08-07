@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_audit_watch_syscall.sh lsetxattr
+test_audit_watch_syscall lsetxattr
 

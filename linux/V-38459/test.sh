@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_group.sh /etc/group root
+test_group /etc/group root

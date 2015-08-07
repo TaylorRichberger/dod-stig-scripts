@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_start.sh ntpd
+fix_service_start ntpd

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_stop.sh rexec
+fix_service_stop rexec

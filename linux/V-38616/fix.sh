@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_sshd_config.sh PermitUserEnvironment no
+fix_sshd_config PermitUserEnvironment no

@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_service_start.sh ip6tables
+test_service_start ip6tables
 

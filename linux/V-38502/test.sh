@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_owner.sh /etc/shadow root
+test_owner /etc/shadow root

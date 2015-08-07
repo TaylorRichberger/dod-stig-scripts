@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_sysctl.sh exec-shield 1
+fix_sysctl exec-shield 1

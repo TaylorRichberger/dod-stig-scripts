@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_service_start.sh iptables
+test_service_start iptables
 

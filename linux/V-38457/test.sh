@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_perms.sh /etc/passwd 644
+test_perms /etc/passwd 644

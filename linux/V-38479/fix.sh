@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_login_defs.sh PASS_MAX_DAYS 60
+fix_login_defs PASS_MAX_DAYS 60

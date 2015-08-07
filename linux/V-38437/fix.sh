@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_stop.sh autofs
+fix_service_stop autofs

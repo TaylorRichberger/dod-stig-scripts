@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_group.sh /etc/gshadow root
+test_group /etc/gshadow root

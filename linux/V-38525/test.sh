@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_audit_watch_syscall.sh stime
+test_audit_watch_syscall stime
 

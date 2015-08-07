@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_service_start.sh ntpd
+test_service_start ntpd

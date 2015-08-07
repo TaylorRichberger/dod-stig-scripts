@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_service_stop.sh xinetd
+test_service_stop xinetd

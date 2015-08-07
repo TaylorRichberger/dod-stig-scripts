@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_perms.sh /etc/grub.sh 600
+test_perms /etc/grub.sh 600
 

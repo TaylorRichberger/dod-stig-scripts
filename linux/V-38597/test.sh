@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_sysctl.sh exec-shield 1
+test_sysctl exec-shield 1

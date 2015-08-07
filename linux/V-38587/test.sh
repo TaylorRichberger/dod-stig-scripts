@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_service_stop.sh telnet-server
+test_service_stop telnet-server
 

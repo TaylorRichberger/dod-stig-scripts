@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_login_defs.sh PASS_WARN_AGE 7
+fix_login_defs PASS_WARN_AGE 7

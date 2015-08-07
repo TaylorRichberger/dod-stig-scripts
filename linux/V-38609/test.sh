@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_service_stop.sh tftp
+test_service_stop tftp

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_perms.sh /etc/group 644
+test_perms /etc/group 644

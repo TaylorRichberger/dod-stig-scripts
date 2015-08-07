@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_service_start.sh crond
+test_service_start crond

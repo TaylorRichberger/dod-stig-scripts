@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_service_stop.sh avahi-daemon
+test_service_stop avahi-daemon

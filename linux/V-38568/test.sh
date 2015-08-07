@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_audit_watch_syscall.sh mount
+test_audit_watch_syscall mount
 

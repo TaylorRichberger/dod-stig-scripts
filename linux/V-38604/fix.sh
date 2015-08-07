@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_stop.sh ypbind
+fix_service_stop ypbind

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_service_stop.sh rlogin
+test_service_stop rlogin

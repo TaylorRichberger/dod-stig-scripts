@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_perms.sh /etc/shadow 000
+test_perms /etc/shadow 000
 

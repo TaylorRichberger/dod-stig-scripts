@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_sysctl.sh net.ipv4.conf.default.send_redirects 0
+fix_sysctl net.ipv4.conf.default.send_redirects 0

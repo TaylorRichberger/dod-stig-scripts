@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_sshd_config.sh ClientAliveInterval 900
+fix_sshd_config ClientAliveInterval 900

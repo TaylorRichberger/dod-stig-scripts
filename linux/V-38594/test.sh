@@ -1,5 +1,5 @@
 #!/bin/sh
 
-test_service_stop.sh rsh
+test_service_stop rsh
 
 exit 0

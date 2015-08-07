@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_group.sh /etc/passwd root
+test_group /etc/passwd root

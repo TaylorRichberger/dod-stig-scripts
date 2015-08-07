@@ -1,4 +1,4 @@
 #!/bin/sh
 
-fix_service_stop.sh xinetd
+fix_service_stop xinetd
 

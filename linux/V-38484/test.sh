@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_sshd_config.sh PrintLastLog yes
+test_sshd_config PrintLastLog yes

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_owner.sh /etc/passwd root
+test_owner /etc/passwd root

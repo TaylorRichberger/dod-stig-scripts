@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_service_stop.sh rsh-server
+test_service_stop rsh-server
 

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_sshd_config.sh PermitUserEnvironment no
+test_sshd_config PermitUserEnvironment no

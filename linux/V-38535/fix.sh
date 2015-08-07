@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_sysctl.sh net.ipv4.icmp_echo_ignore_broadcasts 1
+fix_sysctl net.ipv4.icmp_echo_ignore_broadcasts 1

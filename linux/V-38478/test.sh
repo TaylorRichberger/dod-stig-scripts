@@ -1,5 +1,5 @@
 #!/bin/sh
 
-test_service_stop.sh rhnsd
+test_service_stop rhnsd
 
 exit 0

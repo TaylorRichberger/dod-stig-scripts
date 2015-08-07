@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_stop.sh rhnsd
+fix_service_stop rhnsd

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-test_sysctl.sh net.ipv4.conf.all.secure_redirects 0
+test_sysctl net.ipv4.conf.all.secure_redirects 0

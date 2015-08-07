@@ -1,3 +1,3 @@
 #!/bin/sh
 
-fix_service_stop.sh rsh
+fix_service_stop rsh

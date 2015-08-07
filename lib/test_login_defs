@@ -10,7 +10,7 @@ if [ -z "$value" ]; then
     exit 1
 fi
 
-if [ "$value" -$operator "$threshold" ]; then
+if [ "$value" $operator "$threshold" ]; then
     exit 0
 fi
 

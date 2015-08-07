@@ -1,0 +1,8 @@
+#!/bin/sh
+
+option="$1"
+value="$2"
+
+sed -i "/^[[:space:]]*$option[[:space:]]*=/d" /etc/audit/auditd.conf
+echo "$option = $value" >> /etc/audit/auditd.conf
+

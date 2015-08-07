@@ -1,4 +1,4 @@
 #!/bin/sh
 
-test_audit_watch_syscall.sh settimeofday
+test_audit_watch_syscall settimeofday
 
