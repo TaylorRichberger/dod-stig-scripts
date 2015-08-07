@@ -2,7 +2,7 @@
 
 file="$1"
 
-if ! auditctl -l | grep -q "watch=$file"; then
+if ! auditctl -l | grep -q "$file"; then
     echo "$file is not watched"
     exit 1
 fi
