@@ -3,7 +3,7 @@
 option="$1"
 acceptable="$2"
 
-if grep -E "^$option" /etc/audit/auditd.conf | sed 's/^[^=]*=//' | grep -qviE "$acceptable"; then
+if grep -E "^$option[[:space:]]*=" /etc/audit/auditd.conf | sed 's/^[^=]*=//' | grep -qviE "$acceptable"; then
     echo "/etc/audit/auditd.conf does not have $option matching $acceptable"
     exit 1
 fi
