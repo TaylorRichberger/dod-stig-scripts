@@ -31,7 +31,7 @@ while [ $# -gt 0 ]; do
     ruledir="$1"
     shift
 
-    echo "Testing rule $1"
+    echo "Testing rule $ruledir"
 
     if [ -e "$ruledir/test.sh" ]; then
         if ! "$ruledir/test.sh"; then
