@@ -44,6 +44,8 @@ while [ $# -gt 0 ]; do
                     if [ "$runfix" = y -o "$runfix" = Y ]; then
                         "$ruledir/fix.sh"
                     fi
+                else
+                    echo
                 fi
             else
                 echo "There is no fix available, you must fix this yourself:"
