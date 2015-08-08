@@ -37,9 +37,11 @@ while [ $# -gt 0 ]; do
             if [ -e "$ruledir/fix.sh" ]; then
                 printrule "$ruledir/vars.sh"
                 printf "There is a fix available, would you like to run it(y/n)? "
-                read runfix
-                if [ "$runfix" = y -o "$runfix" = Y ]; then
-                    "$ruledir/fix.sh"
+                if [ "$TESTONLY" -eq 0 ]; then
+                    read runfix
+                    if [ "$runfix" = y -o "$runfix" = Y ]; then
+                        "$ruledir/fix.sh"
+                    fi
                 fi
             else
                 echo "There is no fix available, you must fix this yourself:"
