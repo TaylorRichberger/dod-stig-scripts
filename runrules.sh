@@ -20,7 +20,7 @@ printrule() {
 
 TESTONLY=0
 
-if [ x"$1" = x'-t' ]; then
+if [ "x$1" = 'x-t' ]; then
     TESTONLY=1
     shift
 fi
@@ -30,6 +30,8 @@ export PATH="./lib:$PATH"
 while [ $# -gt 0 ]; do
     ruledir="$1"
     shift
+
+    echo "Testing rule $1"
 
     if [ -e "$ruledir/test.sh" ]; then
         if ! "$ruledir/test.sh"; then

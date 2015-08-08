@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./runrules.sh ./linux/*
+./runrules.sh $* ./linux/*
