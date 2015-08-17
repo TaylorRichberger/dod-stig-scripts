@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if mount | grep 'on /home '; then
+if mount | grep -q 'on /home '; then
     exit 0
 fi
 
