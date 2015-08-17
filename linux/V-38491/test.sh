@@ -5,9 +5,9 @@ if [ -e /etc/hosts.equiv ]; then
     exit 1
 fi
 
-if [ -n "$(find / -type f -name '.rhosts')" ]; then
+if [ -n "$(find / -xdev -type f -name '.rhosts')" ]; then
     echo .rhosts found
-    find / -type f -name '.rhosts'
+    find / -xdev -type f -name '.rhosts'
     exit 1
 fi
 

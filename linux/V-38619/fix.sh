@@ -1,3 +1,3 @@
 #!/bin/sh
 
-find / -type f -name '.netrc' -delete
+find / -xdev -type f -name '.netrc' -delete
