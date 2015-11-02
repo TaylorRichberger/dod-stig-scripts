@@ -45,7 +45,7 @@ for my $file (@ARGV)
             }
             say('');
         }
-    } else
+    } elsif (not $testonly)
     {
         print("\n");
         say('======  COULD NOT TEST, CHECK MANUALLY  ======');

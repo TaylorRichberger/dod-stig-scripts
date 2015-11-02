@@ -52,7 +52,7 @@ while [ $# -gt 0 ]; do
                 printrule "$ruledir/vars.sh"
             fi
         fi
-    else
+    elif [ '$TESTONLY' -ne 1 ]; then
         echo "Can not test.  You must test manually."
         printrule "$ruledir/vars.sh"
     fi
