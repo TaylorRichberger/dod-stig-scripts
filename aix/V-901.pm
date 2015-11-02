@@ -73,7 +73,7 @@ sub fix()
     while (my @pw = getpwent())
     {
         my $home = $pw[7];
-        my $uid = $pw[1];
+        my $uid = $pw[2];
         if (($uid >= 200) && ($uid < 100000))
         {
             $output .= `chmod 0750 $home`;

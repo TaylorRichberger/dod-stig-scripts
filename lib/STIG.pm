@@ -82,21 +82,24 @@ sub FileShouldContain($$)
 sub FileShouldNotContain($$)
 {
     my ($filename, $pattern) = @_;
-    open (my $file, '<', $filename);
     my $found = 0;
-    if ($file)
+    if (-e $filename)
     {
-        while (my $line = <$file>)
+        open (my $file, '<', $filename);
+        if ($file)
         {
-            chomp($line);
-            if ($line =~ $pattern)
+            while (my $line = <$file>)
             {
-                $found = 1;
+                chomp($line);
+                if ($line =~ $pattern)
+                {
+                    $found = 1;
+                }
             }
+        } else
+        {
+            return "$filename could not be opened\n";
         }
-    } else
-    {
-        return "$filename could not be opened\n";
     }
     if ($found)
     {
