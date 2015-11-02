@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
-use feature 'say';
+
+sub say;
 
 my $testonly = 0;
 
@@ -55,4 +56,9 @@ for my $file (@ARGV)
         say('fix: ' . getFix());
         say('');
     }
+}
+
+sub say
+{
+    print(@_, "\n");
 }
