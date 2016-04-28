@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^telnet/);
+    return STIG::FileShouldNotContain($filename, qr/telnet/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^telnet/#&/');
+    STIG::sedi($filename, 's/^.*telnet/#&/');
     return `refresh -s inetd`;
 }
 

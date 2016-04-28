@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^time/);
+    return STIG::FileShouldNotContain($filename, qr/time/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^time/#&/');
+    STIG::sedi($filename, 's/^.*time/#&/');
     return `refresh -s inetd`;
 }
 

@@ -49,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^daytime/);
+    return STIG::FileShouldNotContain($filename, qr/daytime/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^daytime/#&/');
+    STIG::sedi($filename, 's/^.*daytime/#&/');
     return `refresh -s inetd`;
 }
 

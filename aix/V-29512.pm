@@ -48,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^pcnfsd/);
+    return STIG::FileShouldNotContain($filename, qr/pcnfsd/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^pcnfsd/#&/');
+    STIG::sedi($filename, 's/^.*pcnfsd/#&/');
     return `refresh -s inetd`;
 }
 

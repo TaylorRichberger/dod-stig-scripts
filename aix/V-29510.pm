@@ -51,12 +51,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^n?talk/);
+    return STIG::FileShouldNotContain($filename, qr/n?talk/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^n*talk/#&/');
+    STIG::sedi($filename, 's/^.*n*talk/#&/');
     return `refresh -s inetd`;
 }
 

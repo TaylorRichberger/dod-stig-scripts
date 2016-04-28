@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^netstat/);
+    return STIG::FileShouldNotContain($filename, qr/netstat/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^netstat/#&/');
+    STIG::sedi($filename, 's/^.*netstat/#&/');
     return `refresh -s inetd`;
 }
 

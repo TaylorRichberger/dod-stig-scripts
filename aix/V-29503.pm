@@ -48,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^comsat/);
+    return STIG::FileShouldNotContain($filename, qr/comsat/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^comsat/#&/');
+    STIG::sedi($filename, 's/^.*comsat/#&/');
     return `refresh -s inetd`;
 }
 

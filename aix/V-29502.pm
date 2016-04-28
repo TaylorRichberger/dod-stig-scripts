@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^ttdbserver/);
+    return STIG::FileShouldNotContain($filename, qr/ttdbserver/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^ttdbserver/#&/');
+    STIG::sedi($filename, 's/^.*ttdbserver/#&/');
     return `refresh -s inetd`;
 }
 

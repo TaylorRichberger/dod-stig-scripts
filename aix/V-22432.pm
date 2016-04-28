@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^rlogind/);
+    return STIG::FileShouldNotContain($filename, qr/rlogind/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^rlogind/#&/d');
+    STIG::sedi($filename, 's/^.*rlogind/#&/d');
     return `refresh -s inetd`;
 }
 

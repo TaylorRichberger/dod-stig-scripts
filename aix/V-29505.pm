@@ -49,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^discard/);
+    return STIG::FileShouldNotContain($filename, qr/discard/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^discard/#&/');
+    STIG::sedi($filename, 's/^.*discard/#&/');
     return `refresh -s inetd`;
 }
 

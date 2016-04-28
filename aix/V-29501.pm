@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/^cmsd/);
+    return STIG::FileShouldNotContain($filename, qr/cmsd/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^cmsd/#&/');
+    STIG::sedi($filename, 's/^.*cmsd/#&/');
     return `refresh -s inetd`;
 }
 
