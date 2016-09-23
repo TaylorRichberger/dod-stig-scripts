@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/dtsp/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*dtsp/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*dtsp/#&/');
+    STIG::sedi($filename, 's/^[^#].*dtsp/#&/');
     return `refresh -s inetd`;
 }
 

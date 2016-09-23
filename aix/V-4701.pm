@@ -48,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/finger/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*finger/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*finger/#&/');
+    STIG::sedi($filename, 's/^[^#].*finger/#&/');
     return `refresh -s inetd`;
 }
 

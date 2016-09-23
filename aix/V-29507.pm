@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/echo/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*echo/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*echo/#&/');
+    STIG::sedi($filename, 's/^[^#].*echo/#&/');
     return `refresh -s inetd`;
 }
 

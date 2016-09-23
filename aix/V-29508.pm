@@ -50,12 +50,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/imap/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*imap/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*imap/#&/');
+    STIG::sedi($filename, 's/^[^#].*imap/#&/');
     return `refresh -s inetd`;
 }
 

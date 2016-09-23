@@ -48,12 +48,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/pop3/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*pop3/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*pop3/#&/');
+    STIG::sedi($filename, 's/^[^#].*pop3/#&/');
     return `refresh -s inetd`;
 }
 

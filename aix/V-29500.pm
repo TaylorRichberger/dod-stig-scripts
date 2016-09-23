@@ -52,12 +52,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/chargen/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*chargen/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*chargen/#&/');
+    STIG::sedi($filename, 's/^[^#].*chargen/#&/');
     return `refresh -s inetd`;
 }
 
