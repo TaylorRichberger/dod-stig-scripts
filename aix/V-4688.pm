@@ -49,12 +49,12 @@ sub canFix()
 
 sub test()
 {
-    return STIG::FileShouldNotContain($filename, qr/rexec/);
+    return STIG::FileShouldNotContain($filename, qr/^[^#].*rexec/);
 }
 
 sub fix()
 {
-    STIG::sedi($filename, 's/^.*rexec/#&/');
+    STIG::sedi($filename, 's/^[^#].*rexec/#&/');
     return `refresh -s inetd`;
 }
 
